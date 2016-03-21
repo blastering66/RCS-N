@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">RcsLive</string>
+    <string name="app_name">Nokia Live</string>
+
+    <string name="app_id_new">1766918830209252</string>
 </resources>
