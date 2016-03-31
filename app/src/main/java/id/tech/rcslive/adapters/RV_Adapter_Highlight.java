@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import id.tech.rcslive.activity.R;
 import java.util.List;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
@@ -29,11 +32,12 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
         holder.tv_alamat.setText(item.getTvAlamat());
         holder.tv_kategori.setText(item.getTvKategori());
         holder.tv_joined.setText(item.getJoined());
-        if(position == 0){
-            holder.img.setImageResource(R.drawable.img_vp_02);
-        }else{
-            holder.img.setImageResource(R.drawable.img_vp_03);
-        }
+        Glide.with(context).load(item.getEventPhoto()).into(holder.img);
+//        if(position == 0){
+//            holder.img.setImageResource(R.drawable.img_vp_02);
+//        }else{
+//            holder.img.setImageResource(R.drawable.img_vp_03);
+//        }
 
     }
 

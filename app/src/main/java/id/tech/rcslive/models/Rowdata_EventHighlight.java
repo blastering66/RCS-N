@@ -29,7 +29,9 @@ public class Rowdata_EventHighlight {
     @SerializedName("joined")
     @Expose
     private String joined;
-
+    @SerializedName("event_photo")
+    @Expose
+    private String eventPhoto;
 
 
     /**
@@ -159,4 +161,11 @@ public class Rowdata_EventHighlight {
     }
 
 
+    public String getEventPhoto() {
+        return eventPhoto;
+    }
+
+    public void setEventPhoto(String eventPhoto) {
+        this.eventPhoto = eventPhoto;
+    }
 }

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import id.tech.rcslive.activity.R;
@@ -30,12 +32,13 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
         holder.tv_tgl.setText(item.getTvTgl());
         holder.tv_judul.setText(item.getTvJudul());
         holder.tv_alamat.setText(item.getTvAlamat());
+        Glide.with(context).load(item.getEventPhoto()).into(holder.img);
 
-        if(position == 0){
-            holder.img.setImageResource(R.drawable.img_vp_02);
-        }else{
-            holder.img.setImageResource(R.drawable.img_vp_03);
-        }
+//        if(position == 0){
+//            holder.img.setImageResource(R.drawable.img_vp_02);
+//        }else{
+//            holder.img.setImageResource(R.drawable.img_vp_03);
+//        }
 
     }
 

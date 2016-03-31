@@ -38,7 +38,7 @@ public class Splashscreen extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try{
                 Thread.sleep(1500);
-                sp = getSharedPreferences(ParameterCollections.SH_NAME, MODE_PRIVATE);
+                sp = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
 //                showHashKey();
             }catch (Exception e){
 
@@ -51,10 +51,11 @@ public class Splashscreen extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            boolean isLogged = sp.getBoolean(ParameterCollections.SH_LOGGED, false);
+            boolean isLogged = sp.getBoolean(ParameterCollections.SPF_LOGGED, false);
 
             if(isLogged){
-
+                startActivity(new Intent(getApplicationContext(), MenuUtama.class));
+                finish();
             }else{
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();

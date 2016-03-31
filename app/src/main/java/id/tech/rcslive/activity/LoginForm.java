@@ -1,10 +1,16 @@
 package id.tech.rcslive.activity;
 
 import butterknife.OnClick;
+import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.dialogs.DialogFragmentProgress;
+import id.tech.rcslive.models.Pojo_EventHighlight;
+import id.tech.rcslive.models.Pojo_ResponseLogin;
 import id.tech.rcslive.util.*;
 import id.tech.rcslive.fragment.WalkthroughFragmentActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -14,6 +20,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Call;
+import retrofit.GsonConverterFactory;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -42,6 +53,7 @@ import com.facebook.login.LoginResult;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class LoginForm  extends AppCompatActivity {
@@ -54,6 +66,7 @@ public class LoginForm  extends AppCompatActivity {
     @Bind(R.id.ed_username)
     EditText ed_Username;
     @Bind(R.id.ed_password) EditText ed_Password;
+    SharedPreferences spf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +74,8 @@ public class LoginForm  extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login_form);
         ButterKnife.bind(this);
+
+        spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -113,6 +128,7 @@ public class LoginForm  extends AppCompatActivity {
 
                                 }
 
+                                spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL,"").commit();
                                 Log.e("fb response = ", user_fullname + " , "+ user_email +", "+ user_foto);
                             }
                         });
@@ -184,10 +200,81 @@ public class LoginForm  extends AppCompatActivity {
                 break;
 
             case R.id.action_login:
-                startActivity(new Intent(getApplicationContext(), MenuUtama.class));
-                finish();
+                if(ed_Password.getText().toString().equals("") || ed_Username.getText().toString().equals("")){
+
+                    Toast.makeText(getApplicationContext(), "Please Fill Username & Password", Toast.LENGTH_LONG).show();
+                }else{
+                    new ASyncTask_Login().execute();
+                }
+
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private class ASyncTask_Login extends AsyncTask<Void,Void,Void>{
+        DialogFragmentProgress pDialog;
+        String cCode="0";
+        String cEmail, cPassword, cResponse;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new DialogFragmentProgress();
+            pDialog.show(getSupportFragmentManager(), "");
+
+            cEmail = ed_Username.getText().toString();
+            cPassword = ed_Password.getText().toString();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(ParameterCollections.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create()).build();
+            Rest_Adapter adapter = retrofit.create(Rest_Adapter.class);
+            Call<Pojo_ResponseLogin> call = adapter.login(ParameterCollections.KIND_LOGIN, cEmail, cPassword);
+
+            try{
+                Response<Pojo_ResponseLogin> response = call.execute();
+                if(response.isSuccess()){
+                    cCode= response.body().getJsonCode().toString();
+                    cResponse= response.body().getResponse().toString();
+                    String id = response.body().getData().get(0).getId();
+                    String name = response.body().getData().get(0).getMemberName();
+                    String url_photo = response.body().getData().get(0).getMemberPhoto();
+
+                    spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
+                    spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();
+                    spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_photo).commit();
+                    spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+
+                }else{
+                    cCode="0";
+                    cResponse = response.errorBody().toString();
+                }
+
+            }catch (IOException e){
+                cCode="0";
+                cResponse = ParameterCollections.ERROR_MESSAGE + e.getMessage().toString();
+            }catch (Exception e){
+                cCode="0";
+                cResponse = ParameterCollections.ERROR_MESSAGE + e.getMessage().toString();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            pDialog.dismiss();
+
+            if(cCode.equals("1")){
+                startActivity(new Intent(getApplicationContext(), MenuUtama.class));
+                finish();
+            }else{
+                Toast.makeText(getApplicationContext(), cResponse, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

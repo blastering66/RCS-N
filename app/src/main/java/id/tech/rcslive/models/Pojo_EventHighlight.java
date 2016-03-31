@@ -6,15 +6,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Pojo_EventHighlight {
+
+
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
-    @SerializedName("total_data")
-    @Expose
-    private Integer totalData;
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();
+    @SerializedName("response")
+    @Expose
+    private String response;
 
     /**
      *
@@ -37,24 +39,6 @@ public class Pojo_EventHighlight {
     /**
      *
      * @return
-     * The totalData
-     */
-    public Integer getTotalData() {
-        return totalData;
-    }
-
-    /**
-     *
-     * @param totalData
-     * The total_data
-     */
-    public void setTotalData(Integer totalData) {
-        this.totalData = totalData;
-    }
-
-    /**
-     *
-     * @return
      * The data
      */
     public List<Datum> getData() {
@@ -70,155 +54,441 @@ public class Pojo_EventHighlight {
         this.data = data;
     }
 
-    public static class Datum {
+    /**
+     *
+     * @return
+     * The response
+     */
+    public String getResponse() {
+        return response;
+    }
 
-        @SerializedName("id_event")
+    /**
+     *
+     * @param response
+     * The response
+     */
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public class Datum {
+
+        @SerializedName("id")
         @Expose
-        private String idEvent;
-        @SerializedName("id_visit")
+        private String id;
+        @SerializedName("event_creatorid")
         @Expose
-        private String idVisit;
-        @SerializedName("tv_tgl")
+        private String eventCreatorid;
+        @SerializedName("member_userid")
         @Expose
-        private String tvTgl;
-        @SerializedName("tv_judul")
+        private String memberUserid;
+        @SerializedName("member_name")
         @Expose
-        private String tvJudul;
-        @SerializedName("tv_alamat")
+        private String memberName;
+        @SerializedName("member_facebooklink")
         @Expose
-        private String tvAlamat;
-        @SerializedName("tv_kategori")
+        private String memberFacebooklink;
+        @SerializedName("member_linkedinlink")
         @Expose
-        private String tvKategori;
-        @SerializedName("joined")
+        private String memberLinkedinlink;
+        @SerializedName("event_title")
         @Expose
-        private String joined;
+        private String eventTitle;
+        @SerializedName("event_documentationid")
+        @Expose
+        private String eventDocumentationid;
+        @SerializedName("event_description")
+        @Expose
+        private String eventDescription;
+        @SerializedName("event_minjoin")
+        @Expose
+        private String eventMinjoin;
+        @SerializedName("event_categoriesid")
+        @Expose
+        private String eventCategoriesid;
+        @SerializedName("categories_name")
+        @Expose
+        private String categoriesName;
+        @SerializedName("categories_photo")
+        @Expose
+        private String categoriesPhoto;
+        @SerializedName("event_photo")
+        @Expose
+        private String eventPhoto;
+        @SerializedName("event_location")
+        @Expose
+        private String eventLocation;
+        @SerializedName("event_lat")
+        @Expose
+        private String eventLat;
+        @SerializedName("event_lon")
+        @Expose
+        private String eventLon;
+        @SerializedName("deadline")
+        @Expose
+        private String deadline;
+        @SerializedName("created_at")
+        @Expose
+        private String createdAt;
+        @SerializedName("event_statusactive")
+        @Expose
+        private String eventStatusactive;
 
         /**
          *
          * @return
-         * The idEvent
+         * The id
          */
-        public String getIdEvent() {
-            return idEvent;
+        public String getId() {
+            return id;
         }
 
         /**
          *
-         * @param idEvent
-         * The id_event
+         * @param id
+         * The id
          */
-        public void setIdEvent(String idEvent) {
-            this.idEvent = idEvent;
-        }
-
-        /**
-         *
-         * @return
-         * The idVisit
-         */
-        public String getIdVisit() {
-            return idVisit;
-        }
-
-        /**
-         *
-         * @param idVisit
-         * The id_visit
-         */
-        public void setIdVisit(String idVisit) {
-            this.idVisit = idVisit;
-        }
-
-        /**
-         *
-         * @return
-         * The tvTgl
-         */
-        public String getTvTgl() {
-            return tvTgl;
-        }
-
-        /**
-         *
-         * @param tvTgl
-         * The tv_tgl
-         */
-        public void setTvTgl(String tvTgl) {
-            this.tvTgl = tvTgl;
-        }
-
-        /**
-         *
-         * @return
-         * The tvJudul
-         */
-        public String getTvJudul() {
-            return tvJudul;
-        }
-
-        /**
-         *
-         * @param tvJudul
-         * The tv_judul
-         */
-        public void setTvJudul(String tvJudul) {
-            this.tvJudul = tvJudul;
-        }
-
-        /**
-         *
-         * @return
-         * The tvAlamat
-         */
-        public String getTvAlamat() {
-            return tvAlamat;
-        }
-
-        /**
-         *
-         * @param tvAlamat
-         * The tv_alamat
-         */
-        public void setTvAlamat(String tvAlamat) {
-            this.tvAlamat = tvAlamat;
+        public void setId(String id) {
+            this.id = id;
         }
 
         /**
          *
          * @return
-         * The tvKategori
+         * The eventCreatorid
          */
-        public String getTvKategori() {
-            return tvKategori;
+        public String getEventCreatorid() {
+            return eventCreatorid;
         }
 
         /**
          *
-         * @param tvKategori
-         * The tv_kategori
+         * @param eventCreatorid
+         * The event_creatorid
          */
-        public void setTvKategori(String tvKategori) {
-            this.tvKategori = tvKategori;
+        public void setEventCreatorid(String eventCreatorid) {
+            this.eventCreatorid = eventCreatorid;
         }
 
         /**
          *
          * @return
-         * The joined
+         * The memberUserid
          */
-        public String getJoined() {
-            return joined;
+        public String getMemberUserid() {
+            return memberUserid;
         }
 
         /**
          *
-         * @param joined
-         * The joined
+         * @param memberUserid
+         * The member_userid
          */
-        public void setJoined(String joined) {
-            this.joined = joined;
+        public void setMemberUserid(String memberUserid) {
+            this.memberUserid = memberUserid;
+        }
+
+        /**
+         *
+         * @return
+         * The memberName
+         */
+        public String getMemberName() {
+            return memberName;
+        }
+
+        /**
+         *
+         * @param memberName
+         * The member_name
+         */
+        public void setMemberName(String memberName) {
+            this.memberName = memberName;
+        }
+
+        /**
+         *
+         * @return
+         * The memberFacebooklink
+         */
+        public String getMemberFacebooklink() {
+            return memberFacebooklink;
+        }
+
+        /**
+         *
+         * @param memberFacebooklink
+         * The member_facebooklink
+         */
+        public void setMemberFacebooklink(String memberFacebooklink) {
+            this.memberFacebooklink = memberFacebooklink;
+        }
+
+        /**
+         *
+         * @return
+         * The memberLinkedinlink
+         */
+        public String getMemberLinkedinlink() {
+            return memberLinkedinlink;
+        }
+
+        /**
+         *
+         * @param memberLinkedinlink
+         * The member_linkedinlink
+         */
+        public void setMemberLinkedinlink(String memberLinkedinlink) {
+            this.memberLinkedinlink = memberLinkedinlink;
+        }
+
+        /**
+         *
+         * @return
+         * The eventTitle
+         */
+        public String getEventTitle() {
+            return eventTitle;
+        }
+
+        /**
+         *
+         * @param eventTitle
+         * The event_title
+         */
+        public void setEventTitle(String eventTitle) {
+            this.eventTitle = eventTitle;
+        }
+
+        /**
+         *
+         * @return
+         * The eventDocumentationid
+         */
+        public String getEventDocumentationid() {
+            return eventDocumentationid;
+        }
+
+        /**
+         *
+         * @param eventDocumentationid
+         * The event_documentationid
+         */
+        public void setEventDocumentationid(String eventDocumentationid) {
+            this.eventDocumentationid = eventDocumentationid;
+        }
+
+        /**
+         *
+         * @return
+         * The eventDescription
+         */
+        public String getEventDescription() {
+            return eventDescription;
+        }
+
+        /**
+         *
+         * @param eventDescription
+         * The event_description
+         */
+        public void setEventDescription(String eventDescription) {
+            this.eventDescription = eventDescription;
+        }
+
+        /**
+         *
+         * @return
+         * The eventMinjoin
+         */
+        public String getEventMinjoin() {
+            return eventMinjoin;
+        }
+
+        /**
+         *
+         * @param eventMinjoin
+         * The event_minjoin
+         */
+        public void setEventMinjoin(String eventMinjoin) {
+            this.eventMinjoin = eventMinjoin;
+        }
+
+        /**
+         *
+         * @return
+         * The eventCategoriesid
+         */
+        public String getEventCategoriesid() {
+            return eventCategoriesid;
+        }
+
+        /**
+         *
+         * @param eventCategoriesid
+         * The event_categoriesid
+         */
+        public void setEventCategoriesid(String eventCategoriesid) {
+            this.eventCategoriesid = eventCategoriesid;
+        }
+
+        /**
+         *
+         * @return
+         * The categoriesName
+         */
+        public String getCategoriesName() {
+            return categoriesName;
+        }
+
+        /**
+         *
+         * @param categoriesName
+         * The categories_name
+         */
+        public void setCategoriesName(String categoriesName) {
+            this.categoriesName = categoriesName;
+        }
+
+        /**
+         *
+         * @return
+         * The categoriesPhoto
+         */
+        public String getCategoriesPhoto() {
+            return categoriesPhoto;
+        }
+
+        /**
+         *
+         * @param categoriesPhoto
+         * The categories_photo
+         */
+        public void setCategoriesPhoto(String categoriesPhoto) {
+            this.categoriesPhoto = categoriesPhoto;
+        }
+
+        public String getEventPhoto() {
+            return eventPhoto;
+        }
+
+        /**
+         *
+         * @param eventPhoto
+         * The categories_photo
+         */
+        public void setEventPhoto(String eventPhoto) {
+            this.eventPhoto = eventPhoto;
+        }
+        /**
+         *
+         * @return
+         * The eventLocation
+         */
+        public String getEventLocation() {
+            return eventLocation;
+        }
+
+        /**
+         *
+         * @param eventLocation
+         * The event_location
+         */
+        public void setEventLocation(String eventLocation) {
+            this.eventLocation = eventLocation;
+        }
+
+        /**
+         *
+         * @return
+         * The eventLat
+         */
+        public String getEventLat() {
+            return eventLat;
+        }
+
+        /**
+         *
+         * @param eventLat
+         * The event_lat
+         */
+        public void setEventLat(String eventLat) {
+            this.eventLat = eventLat;
+        }
+
+        /**
+         *
+         * @return
+         * The eventLon
+         */
+        public String getEventLon() {
+            return eventLon;
+        }
+
+        /**
+         *
+         * @param eventLon
+         * The event_lon
+         */
+        public void setEventLon(String eventLon) {
+            this.eventLon = eventLon;
+        }
+
+        /**
+         *
+         * @return
+         * The deadline
+         */
+        public String getDeadline() {
+            return deadline;
+        }
+
+        /**
+         *
+         * @param deadline
+         * The deadline
+         */
+        public void setDeadline(String deadline) {
+            this.deadline = deadline;
+        }
+
+        /**
+         *
+         * @return
+         * The createdAt
+         */
+        public String getCreatedAt() {
+            return createdAt;
+        }
+
+        /**
+         *
+         * @param createdAt
+         * The created_at
+         */
+        public void setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+        }
+
+        /**
+         *
+         * @return
+         * The eventStatusactive
+         */
+        public String getEventStatusactive() {
+            return eventStatusactive;
+        }
+
+        /**
+         *
+         * @param eventStatusactive
+         * The event_statusactive
+         */
+        public void setEventStatusactive(String eventStatusactive) {
+            this.eventStatusactive = eventStatusactive;
         }
 
     }
+
 }
