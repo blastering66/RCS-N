@@ -96,6 +96,9 @@ public class Events_Highlight extends Fragment {
                                 item.setTvAlamat(response_event.body().getData().get(i).getEventLocation());
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());
                                 item.setEventPhoto(response_event.body().getData().get(i).getEventPhoto());
+                                item.setEventLat(response_event.body().getData().get(i).getEventLat());
+                                item.setEventLon(response_event.body().getData().get(i).getEventLon());
+                                item.setEventDescription(response_event.body().getData().get(i).getEventDescription());
                                 item.setJoined("0 Joined");
                                 data.add(item);
                             }

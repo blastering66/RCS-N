@@ -21,4 +21,7 @@ public class ParameterCollections {
     public static String TAG_PASS = "password";
 
     public static String ERROR_MESSAGE = "Error = ";
+
+    public static String TAG_LATITUDE_NOW = "lat_now";
+    public static String TAG_LONGITUDE_NOW = "long_now";
 }

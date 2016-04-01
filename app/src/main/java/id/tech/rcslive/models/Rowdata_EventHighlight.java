@@ -32,7 +32,39 @@ public class Rowdata_EventHighlight {
     @SerializedName("event_photo")
     @Expose
     private String eventPhoto;
+    @SerializedName("event_lat")
+    @Expose
+    private String eventLat;
+    @SerializedName("event_lon")
+    @Expose
+    private String eventLon;
+    @SerializedName("event_description")
+    @Expose
+    private String eventDescription;
 
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
+
+    public String getEventLat() {
+        return eventLat;
+    }
+
+    public void setEventLat(String eventLat) {
+        this.eventLat = eventLat;
+    }
+
+    public String getEventLon() {
+        return eventLon;
+    }
+
+    public void setEventLon(String eventLon) {
+        this.eventLon = eventLon;
+    }
 
     /**
      *

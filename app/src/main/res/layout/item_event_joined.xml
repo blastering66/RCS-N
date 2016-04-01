@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp"
+    android:id="@+id/wrapper"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +11,6 @@
         app:layout_widthPercent="30%"
         android:id="@+id/img"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_vp_01"
         android:layout_width="match_parent"
         android:layout_height="150dp" />
 

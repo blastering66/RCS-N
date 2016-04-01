@@ -3,6 +3,8 @@
     package="id.tech.rcslive.activity">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/img_logo"
@@ -20,6 +22,9 @@
         <activity android:name=".Login"/>
         <activity android:name=".LoginForm"/>
         <activity android:name=".MenuUtama"/>
+        <activity android:name=".DetailEvent" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DetailEvent_Desc" android:theme="@style/MyActivityDialogTheme"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id_new" />
