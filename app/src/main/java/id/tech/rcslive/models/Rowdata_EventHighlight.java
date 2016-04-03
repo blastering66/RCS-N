@@ -41,6 +41,17 @@ public class Rowdata_EventHighlight {
     @SerializedName("event_description")
     @Expose
     private String eventDescription;
+    @SerializedName("event_documentationid")
+    @Expose
+    private String eventDocumentationid;
+
+    public String getEventDocumentationid() {
+        return eventDocumentationid;
+    }
+
+    public void setEventDocumentationid(String eventDocumentationid) {
+        this.eventDocumentationid = eventDocumentationid;
+    }
 
     public String getEventDescription() {
         return eventDescription;

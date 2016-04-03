@@ -46,6 +46,8 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
                 intent.putExtra("lat_event", item.getEventLat());
                 intent.putExtra("lon_event", item.getEventLon());
                 intent.putExtra("desc_event", item.getEventDescription());
+                intent.putExtra("id_event", item.getIdEvent());
+                intent.putExtra("event_documentationid", item.getEventDocumentationid());
                 context.startActivity(intent);
             }
         });

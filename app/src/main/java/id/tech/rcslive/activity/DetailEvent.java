@@ -44,6 +44,9 @@ public class DetailEvent extends AppCompatActivity{
     @Bind(R.id.img_joined_2) ImageView img_joined_2;
     @Bind(R.id.img_joined_3) ImageView img_joined_3;
     @Bind(R.id.btn_more_desc)Button btn_more_desc;
+    @Bind(R.id.btn_more_photo)Button btn_more_photo;
+    @Bind(R.id.btn_more_people_joined)Button btn_more_people_joined;
+    String id_event,event_documentationid;
 
     @OnClick(R.id.btn_more_desc) void onCLick(){
         if(btn_more_desc.getText().toString().equals("MORE")){
@@ -53,6 +56,20 @@ public class DetailEvent extends AppCompatActivity{
             tv_desc.setMaxLines(3);
             btn_more_desc.setText("MORE");
         }
+
+    }
+
+    @OnClick(R.id.btn_more_people_joined) void onCLickMoreUserJoined(){
+        Intent intent = new Intent(getApplicationContext(), DetailEvent_UserJoined.class);
+        intent.putExtra("id_event", id_event);
+        startActivity(intent);
+
+    }
+
+    @OnClick(R.id.btn_more_photo) void onCLickMoreDokumentasi(){
+        Intent intent = new Intent(getApplicationContext(), DetailEvent_Dokumetasi.class);
+        intent.putExtra("event_documentationid", event_documentationid);
+        startActivity(intent);
 
     }
 
@@ -86,6 +103,8 @@ public class DetailEvent extends AppCompatActivity{
         String lat_event = getIntent().getStringExtra("lat_event");
         String lon_event = getIntent().getStringExtra("lon_event");
         String desc_event = getIntent().getStringExtra("desc_event");
+        id_event = getIntent().getStringExtra("id_event");
+        event_documentationid = getIntent().getStringExtra("event_documentationid");
 
         mCollapsingToolbarLayout.setTitle(judul_event);
         tv_alamat.setText(alamat_event);

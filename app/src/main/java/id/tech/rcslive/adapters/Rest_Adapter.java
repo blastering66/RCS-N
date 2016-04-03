@@ -3,8 +3,11 @@ package id.tech.rcslive.adapters;
 /**
  * Created by macbook on 3/31/16.
  */
+import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.Pojo_EventHighlight;
+import id.tech.rcslive.models.Pojo_EventUserJoined;
 import id.tech.rcslive.models.Pojo_ResponseLogin;
+import id.tech.rcslive.models.RowData_Dokumentasi;
 import id.tech.rcslive.util.ParameterCollections;
 import retrofit.Call;
 import retrofit.Callback;
@@ -35,6 +38,18 @@ public interface Rest_Adapter {
 
     @GET("getApi.php?")
     Call<Pojo_EventHighlight> get_all_events_joined(
+            @Query("kind") String kind,
+            @Query("id") String id
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_EventUserJoined> get_all_user_joined(
+            @Query("kind") String kind,
+            @Query("id") String id
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_Dokumentasi> get_all_dokumentasi(
             @Query("kind") String kind,
             @Query("id") String id
     );
