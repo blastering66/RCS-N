@@ -129,15 +129,15 @@ public class DetailEvent extends AppCompatActivity{
         Glide.with(this).load(url_map).into(img_map);
         Glide.with(this).load(url_photo_event).into(img_event);
 
-        Location selected_location=new Location("location_user");
-        selected_location.setLatitude(Double.parseDouble(now_latitude));
-        selected_location.setLongitude(Double.parseDouble(now_longitude));
-        Location near_locations=new Location("location_event");
-        near_locations.setLatitude(Double.parseDouble(lat_event));
-        near_locations.setLongitude(Double.parseDouble(lon_event));
-
-        double distance=selected_location.distanceTo(near_locations);
-        tv_jarak.setText(String.valueOf(Math.round(distance)+ " Meter"));
+//        Location selected_location=new Location("location_user");
+//        selected_location.setLatitude(Double.parseDouble(now_latitude));
+//        selected_location.setLongitude(Double.parseDouble(now_longitude));
+//        Location near_locations=new Location("location_event");
+//        near_locations.setLatitude(Double.parseDouble(lat_event));
+//        near_locations.setLongitude(Double.parseDouble(lon_event));
+//        double distance=selected_location.distanceTo(near_locations);
+//        tv_jarak.setText(String.valueOf(Math.round(distance)+ " Meter"));
+        tv_jarak.setText(String.valueOf("30 Km"));
         tv_waktu_tempuh.setText("1 Hour Estimated");
 //        img_joined_1;
 //        img_joined_2;

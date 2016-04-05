@@ -38,7 +38,7 @@ public class Events_Joined extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new ASyncTask_GetAllEvent_Joined().execute();
+
     }
 
     @Nullable
@@ -46,8 +46,9 @@ public class Events_Joined extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_rv, null);
         rv = (RecyclerView)view.findViewById(R.id.rv);
-        layoutManager = new GridLayoutManager(getContext(),1);
 
+
+        new ASyncTask_GetAllEvent_Joined().execute();
         return view;
     }
 
@@ -101,11 +102,12 @@ public class Events_Joined extends Fragment{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(cCode.equals("1")){
+                layoutManager = new GridLayoutManager(getContext(),1);
                 adapter = new RV_Adapter_Joined(getActivity(), data);
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
-                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
             }
         }
     }

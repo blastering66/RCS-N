@@ -197,6 +197,48 @@
             android:text="EVENT COMMENTS"
             android:textColor="@color/colorPrimaryDark" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Contact Person :" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.pkmmte.view.CircularImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/img_profile_test" />
+
+                <TextView
+                    android:text="Soleh Solihun"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/img_call"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

@@ -15,25 +15,25 @@ import java.util.List;
 
 import id.tech.rcslive.activity.DetailEvent;
 import id.tech.rcslive.activity.R;
-import id.tech.rcslive.models.Rowdata_EventHighlight;
+import id.tech.rcslive.models.Rowdata_EventCalendar;
 import id.tech.rcslive.models.Rowdata_EventJoined;
 
-public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.ViewHolder>{
+public class RV_Adapter_Calendar extends RecyclerView.Adapter<RV_Adapter_Calendar.ViewHolder>{
     private Context context;
-    private List<Rowdata_EventJoined> datum;
+    private List<Rowdata_EventCalendar> datum;
 
-    public RV_Adapter_Joined(Context context, List<Rowdata_EventJoined> datum) {
+    public RV_Adapter_Calendar(Context context, List<Rowdata_EventCalendar> datum) {
         this.context = context;
         this.datum = datum;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Rowdata_EventJoined item = datum.get(position);
+        final Rowdata_EventCalendar item = datum.get(position);
         holder.tv_tgl.setText(item.getTvTgl());
         holder.tv_judul.setText(item.getTvJudul());
-        holder.tv_alamat.setText(item.getTvAlamat());
-        Glide.with(context).load(item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
+        holder.tv_kategori.setText(item.getTvKategori());
+        holder.tv_joined.setText(item.getJoined());
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +58,7 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_event_joined, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_event_calendar, null);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -70,19 +70,18 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View wrapper;
-        public ImageView img, btn_share;
-        public TextView tv_tgl, tv_judul,tv_alamat;
+        public ImageView btn_share;
+        public TextView tv_tgl, tv_judul,tv_kategori, tv_joined;
 
         public ViewHolder(View itemView) {
             super(itemView);
             wrapper = (View)itemView.findViewById(R.id.wrapper);
-            img = (ImageView)itemView.findViewById(R.id.img);
             btn_share = (ImageView)itemView.findViewById(R.id.btn_share);
 
             tv_tgl = (TextView)itemView.findViewById(R.id.tv_tgl);
             tv_judul = (TextView)itemView.findViewById(R.id.tv_judul);
-            tv_alamat = (TextView)itemView.findViewById(R.id.tv_alamat);
-
+            tv_kategori = (TextView)itemView.findViewById(R.id.tv_kategori);
+            tv_joined= (TextView)itemView.findViewById(R.id.tv_joined);
 
         }
     }

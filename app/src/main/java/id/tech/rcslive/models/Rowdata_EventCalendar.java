@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by RebelCreative-A1 on 23/03/2016.
  */
-public class Rowdata_EventJoined {
+public class Rowdata_EventCalendar {
 
     @SerializedName("id_event")
     @Expose

@@ -46,6 +46,7 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
 
         ActionBar ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
+        ac.setTitle("Event Photos");
 
         event_documentationid= getIntent().getStringExtra("event_documentationid");
         layoutManager = new GridLayoutManager(getApplicationContext(),3);
@@ -73,6 +74,8 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
                     .addConverterFactory(GsonConverterFactory.create()).build();
             Rest_Adapter adapter = retrofit.create(Rest_Adapter.class);
 
+            //sementara
+//            event_documentationid = "doc20161112";
             Call<Pojo_Dokumentasi> call = adapter.get_all_dokumentasi("documentationbyid_documentation" ,event_documentationid);
             try{
                 Response<Pojo_Dokumentasi> response = call.execute();
