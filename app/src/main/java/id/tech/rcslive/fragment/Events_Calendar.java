@@ -26,9 +26,16 @@ import id.tech.rcslive.activity.R;
 import id.tech.rcslive.adapters.CustomAdapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Joined;
+import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.models.Pojo_EventHighlight;
 import id.tech.rcslive.models.Rowdata_EventCalendar;
 import id.tech.rcslive.models.Rowdata_EventJoined;
+import id.tech.rcslive.util.ParameterCollections;
+import id.tech.rcslive.util.PublicFunctions;
+import retrofit.Call;
+import retrofit.Response;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +47,7 @@ public class Events_Calendar extends Fragment{
     RecyclerView rv;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
+    SharedPreferences spf;
 
     @Nullable
     @Override
@@ -47,6 +55,7 @@ public class Events_Calendar extends Fragment{
         View view = inflater.inflate(R.layout.layout_rv_calendar, null);
         rv = (RecyclerView)view.findViewById(R.id.rv);
 
+        spf = getActivity().getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
         new AsyncTask_GetAll_EventByCalendar().execute();
         return view;
     }
@@ -64,28 +73,68 @@ public class Events_Calendar extends Fragment{
 
         @Override
         protected Void doInBackground(Void... params) {
+            Rest_Adapter adapter= PublicFunctions.initRetrofit();
 
-            Rowdata_EventCalendar item = new Rowdata_EventCalendar();
-            item.setIdEvent("");
-            item.setTvTgl("2016-04-09 18:00");
-            item.setTvJudul("Health Talk AIA");
-            item.setTvAlamat("");
-            item.setTvKategori("Umum");
-            item.setEventPhoto("");
-            item.setJoined("10 Joined");
-            item.setTypeView(0);
-            data.add(item);
+            Call<Pojo_EventHighlight> call = adapter.get_all_events_calendar(ParameterCollections.KIND_EVENT,
+                    "ON");
 
-            Rowdata_EventCalendar item2 = new Rowdata_EventCalendar();
-            item2.setIdEvent("");
-            item2.setTvTgl("2016-04-10 09:00");
-            item2.setTvJudul("Badminton - PLN Duren Tiga");
-            item2.setTvAlamat("");
-            item2.setTvKategori("Sport");
-            item2.setEventPhoto("");
-            item2.setJoined("15 Joined");
-            item2.setTypeView(1);
-            data.add(item2);
+            try{
+                Response<Pojo_EventHighlight> response = call.execute();
+
+                if(response.isSuccess()){
+                    if(response.body().getJsonCode().equals("1")){
+                        for(int i=0; i < response.body().getData().size(); i++){
+                            Rowdata_EventCalendar item = new Rowdata_EventCalendar();
+                            item.setIdEvent(response.body().getData().get(i).getId());
+                            item.setTvTgl(response.body().getData().get(i).getDeadline());
+                            item.setTvJudul(response.body().getData().get(i).getEventTitle());
+                            item.setTvAlamat(response.body().getData().get(i).getEventLocation());
+                            item.setTvKategori(response.body().getData().get(i).getCategoriesName());
+                            item.setEventPhoto(response.body().getData().get(i).getEventPhoto());
+
+                            //blum ada Joined
+                            item.setJoined(response.body().getData().get(i).getEventMinjoin());
+                            item.setEventMinjoin(response.body().getData().get(i).getEventMinjoin());
+
+                            String tgl_spf = spf.getString(ParameterCollections.SPF_SAME_DATE, "");
+
+                            if(tgl_spf.equals("") || !tgl_spf.equals(response.body().getData().get(i).getDeadline())){
+                                item.setTypeView(0);
+                            }else{
+                                item.setTypeView(1);
+                            }
+                            spf.edit().putString(ParameterCollections.SPF_SAME_DATE, response.body().getData().get(i).getDeadline()).commit();
+
+                            data.add(item);
+                        }
+                    }
+                }
+            }catch (IOException e){
+
+            }
+
+//            Rowdata_EventCalendar item = new Rowdata_EventCalendar();
+//            item.setIdEvent("");
+//            item.setTvTgl("2016-04-09 18:00");
+//            item.setTvJudul("Health Talk AIA");
+//            item.setTvAlamat("");
+//            item.setTvKategori("Umum");
+//            item.setEventPhoto("");
+//            item.setJoined("10 Joined");
+//            item.setEventMinjoin("9");
+//            item.setTypeView(0);
+//            data.add(item);
+//            Rowdata_EventCalendar item2 = new Rowdata_EventCalendar();
+//            item2.setIdEvent("");
+//            item2.setTvTgl("2016-04-10 09:00");
+//            item2.setTvJudul("Badminton - PLN Duren Tiga");
+//            item2.setTvAlamat("");
+//            item2.setTvKategori("Sport");
+//            item2.setEventPhoto("");
+//            item2.setJoined("15 Joined");
+//            item2.setEventMinjoin("10");
+//            item2.setTypeView(1);
+//            data.add(item2);
             return null;
         }
 

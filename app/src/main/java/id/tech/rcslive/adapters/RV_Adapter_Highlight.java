@@ -52,7 +52,7 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
         holder.tv_judul.setText(item.getTvJudul());
         holder.tv_alamat.setText(item.getTvAlamat());
         holder.tv_kategori.setText(" #" + item.getTvKategori());
-        holder.tv_joined.setText(item.getJoined());
+        holder.tv_joined.setText(item.getJoined() + " / Min. " + item.getEventMinjoin() + " People");
         Glide.with(context).load(item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override

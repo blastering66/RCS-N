@@ -38,6 +38,12 @@ public interface Rest_Adapter {
     );
 
     @GET("getApi.php?")
+    Call<Pojo_EventHighlight> get_all_events_calendar(
+            @Query("kind") String kind,
+            @Query("calendar_mode") String calendar_mode
+    );
+
+    @GET("getApi.php?")
     Call<Pojo_EventHighlight> get_all_events_joined(
             @Query("kind") String kind,
             @Query("id") String id

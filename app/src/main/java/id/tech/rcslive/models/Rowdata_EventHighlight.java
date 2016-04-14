@@ -44,6 +44,17 @@ public class Rowdata_EventHighlight {
     @SerializedName("event_documentationid")
     @Expose
     private String eventDocumentationid;
+    @SerializedName("event_minjoin")
+    @Expose
+    private String eventMinjoin;
+
+    public String getEventMinjoin() {
+        return eventMinjoin;
+    }
+
+    public void setEventMinjoin(String eventMinjoin) {
+        this.eventMinjoin = eventMinjoin;
+    }
 
     public String getEventDocumentationid() {
         return eventDocumentationid;

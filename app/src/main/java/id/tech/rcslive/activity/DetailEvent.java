@@ -87,8 +87,24 @@ public class DetailEvent extends AppCompatActivity {
     ImageView img_gallery_02;
     @Bind(R.id.img_gallery_03)
     ImageView img_gallery_03;
+    @Bind(R.id.tv_no_comment)
+    TextView tv_no_comment;
+    @Bind(R.id.btn_more_people_joined_img) CircularImageView btn_more_people_joined_img;
+    @Bind(R.id.btn_gallery_img) ImageView btn_gallery_img;
 
     private Activity activity;
+
+    @OnClick(R.id.btn_more_people_joined_img) void onClickMorePeopleJoined(){
+        Intent intent = new Intent(getApplicationContext(), DetailEvent_UserJoined.class);
+        intent.putExtra("id_event", id_event);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_gallery_img) void onClickMoreDoukemtasi(){
+        Intent intent = new Intent(getApplicationContext(), DetailEvent_Dokumetasi.class);
+        intent.putExtra("event_documentationid", event_documentationid);
+        startActivity(intent);
+    }
 
     @OnClick(R.id.btn_more_desc)
     void onCLick() {
@@ -290,6 +306,10 @@ public class DetailEvent extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(isRestSucceded){
+                img_joined_1.setVisibility(View.VISIBLE);
+                img_joined_2.setVisibility(View.VISIBLE);
+                img_joined_3.setVisibility(View.VISIBLE);
+
                 SimpleTarget target  = new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
@@ -449,6 +469,8 @@ public class DetailEvent extends AppCompatActivity {
             super.onPostExecute(aVoid);
 
             if (isCallSucceed) {
+                tv_no_comment.setVisibility(View.GONE);
+
                 LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
                 View view_Comment_00 = mInflater.inflate(R.layout.item_comment, null);
                 CircularImageView img_00 = (CircularImageView) view_Comment_00.findViewById(R.id.img_commentor);

@@ -98,6 +98,7 @@ public class Events_Highlight extends Fragment {
                                 item.setEventPhoto(response_event.body().getData().get(i).getEventPhoto());
                                 item.setEventLat(response_event.body().getData().get(i).getEventLat());
                                 item.setEventLon(response_event.body().getData().get(i).getEventLon());
+                                item.setEventMinjoin(response_event.body().getData().get(i).getEventMinjoin());
                                 item.setEventDescription(response_event.body().getData().get(i).getEventDescription());
                                 item.setEventDocumentationid(response_event.body().getData().get(i).getEventDocumentationid());
                                 item.setJoined("0 Joined");

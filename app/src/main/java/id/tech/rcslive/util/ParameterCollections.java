@@ -13,6 +13,7 @@ public class ParameterCollections {
     public static String SPF_USER_ID = "id";
     public static String SPF_USER_NAME = "name";
     public static String SPF_USER_PHOTO_URL = "photo_url";
+    public static String SPF_SAME_DATE = "same_date";
 
     public static String KIND_LOGIN = "login";
     public static String KIND_EVENT = "event";

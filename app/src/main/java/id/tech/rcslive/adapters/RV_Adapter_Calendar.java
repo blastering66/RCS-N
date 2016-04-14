@@ -39,7 +39,7 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
             case 0:
                 ViewHolder_WithHeader holder_withHeader = (ViewHolder_WithHeader)holder;
                 Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                 try{
                     Date date_Event = df.parse(item.getTvTgl());
                     c.setTime(date_Event);
@@ -56,7 +56,7 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
                 holder_withHeader.tv_jam.setText(hour_Event);
                 holder_withHeader.tv_judul.setText(item.getTvJudul());
                 holder_withHeader.tv_kategori.setText(item.getTvKategori());
-                holder_withHeader.tv_joined.setText(item.getJoined());
+                holder_withHeader.tv_joined.setText(item.getJoined() + " / Min. " + item.getEventMinjoin() + " People");
                 holder_withHeader.wrapper.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -90,7 +90,7 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderNow.tv_jam.setText(hour_Event_content );
                 holderNow.tv_judul.setText(item.getTvJudul());
                 holderNow.tv_kategori.setText(item.getTvKategori());
-                holderNow.tv_joined.setText(item.getJoined());
+                holderNow.tv_joined.setText(item.getJoined() + " / Min. " + item.getEventMinjoin() + " People");
                 holderNow.wrapper.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

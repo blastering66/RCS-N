@@ -62,10 +62,6 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
 
         @Override
         protected Void doInBackground(Void... params) {
-            RowData_Dokumentasi item= new RowData_Dokumentasi();
-            item.setId("");
-            item.setDocumentationPhoto(ParameterCollections.BASE_URL_IMG + "file-page1 (FILEminimizer).jpg");
-            data.add(item);
 
             Retrofit retrofit = new Retrofit.Builder().baseUrl(ParameterCollections.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create()).build();

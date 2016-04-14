@@ -67,7 +67,7 @@ public class Events_Joined extends Fragment{
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
 
             SharedPreferences spf = getActivity().getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
-            Call<Pojo_EventHighlight> call = adapter.get_all_events_joined(ParameterCollections.KIND_EVENT,
+            Call<Pojo_EventHighlight> call = adapter.get_all_events_joined(ParameterCollections.KIND_EVENT_JOINED,
                     spf.getString(ParameterCollections.SPF_USER_ID, ""));
 
             try{
@@ -83,7 +83,8 @@ public class Events_Joined extends Fragment{
                                 item.setTvAlamat(response_event.body().getData().get(i).getEventLocation());
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());
                                 item.setEventPhoto(response_event.body().getData().get(i).getEventPhoto());
-                                item.setJoined("0 Joined");
+                                item.setJoined("10 Joined");
+                                item.setEventMinjoin("6");
                                 data.add(item);
                             }
                         }
@@ -107,7 +108,7 @@ public class Events_Joined extends Fragment{
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
-//                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
             }
         }
     }
