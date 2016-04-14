@@ -22,9 +22,26 @@
         <activity android:name=".Login"/>
         <activity android:name=".LoginForm"/>
         <activity android:name=".MenuUtama"/>
+
+        <activity android:name=".SearchEvent" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchEventResult" />
+        </activity>
+        <activity android:name=".SearchEventResult" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
         <activity android:name=".DetailEvent" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".DetailEvent_UserJoined" />
         <activity android:name=".DetailEvent_Dokumetasi" />
+        <activity android:name=".DetailEvent_Comment" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

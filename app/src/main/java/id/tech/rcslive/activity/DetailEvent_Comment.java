@@ -38,7 +38,7 @@ public class DetailEvent_Comment  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_rv_white_addbtn);
+        setContentView(R.layout.layout_rv_white_add_comment);
         ButterKnife.bind(this);
 
         ActionBar ac = getSupportActionBar();

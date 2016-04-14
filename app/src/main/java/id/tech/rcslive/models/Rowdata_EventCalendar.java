@@ -46,6 +46,18 @@ public class Rowdata_EventCalendar {
     @Expose
     private String eventDocumentationid;
 
+    @SerializedName("typeView")
+    @Expose
+    private int typeView;
+
+    public int getTypeView() {
+        return typeView;
+    }
+
+    public void setTypeView(int typeView) {
+        this.typeView = typeView;
+    }
+
     public String getEventDocumentationid() {
         return eventDocumentationid;
     }

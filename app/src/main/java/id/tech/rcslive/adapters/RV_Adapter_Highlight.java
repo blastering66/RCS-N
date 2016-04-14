@@ -13,6 +13,11 @@ import com.bumptech.glide.Glide;
 
 import id.tech.rcslive.activity.DetailEvent;
 import id.tech.rcslive.activity.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
 
@@ -29,7 +34,21 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Rowdata_EventHighlight item = datum.get(position);
 
-        holder.tv_tgl.setText(item.getTvTgl());
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        try{
+            Date date_Event = df.parse(item.getTvTgl());
+            c.setTime(date_Event);
+        }catch(ParseException e){
+
+        }
+
+        SimpleDateFormat df_new = new SimpleDateFormat("EEE, d MMM y");
+        SimpleDateFormat df_jam = new SimpleDateFormat("hh:mm");
+        String date_Event = df_new.format(c.getTime());
+        String hour_Event = df_jam.format(c.getTime());
+
+        holder.tv_tgl.setText(date_Event);
         holder.tv_judul.setText(item.getTvJudul());
         holder.tv_alamat.setText(item.getTvAlamat());
         holder.tv_kategori.setText(" #" + item.getTvKategori());

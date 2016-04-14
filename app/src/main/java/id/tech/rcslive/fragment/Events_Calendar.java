@@ -19,7 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+
+//import dev.dworks.libs.astickyheader.SimpleSectionedListAdapter;
+//import dev.dworks.libs.astickyheader.ui.PinnedSectionListView;
 import id.tech.rcslive.activity.R;
+import id.tech.rcslive.adapters.CustomAdapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Joined;
 import id.tech.rcslive.models.Rowdata_EventCalendar;
@@ -50,6 +54,7 @@ public class Events_Calendar extends Fragment{
     private class AsyncTask_GetAll_EventByCalendar extends AsyncTask<Void,Void,Void>{
         String cCode="0";
         List<Rowdata_EventCalendar> data;
+        CustomAdapter_Calendar adapter_Calendar;
 
         @Override
         protected void onPreExecute() {
@@ -68,6 +73,7 @@ public class Events_Calendar extends Fragment{
             item.setTvKategori("Umum");
             item.setEventPhoto("");
             item.setJoined("10 Joined");
+            item.setTypeView(0);
             data.add(item);
 
             Rowdata_EventCalendar item2 = new Rowdata_EventCalendar();
@@ -78,6 +84,7 @@ public class Events_Calendar extends Fragment{
             item2.setTvKategori("Sport");
             item2.setEventPhoto("");
             item2.setJoined("15 Joined");
+            item2.setTypeView(1);
             data.add(item2);
             return null;
         }
@@ -88,6 +95,14 @@ public class Events_Calendar extends Fragment{
 
             layoutManager = new GridLayoutManager(getContext(),1);
             adapter = new RV_Adapter_Calendar(getActivity(), data);
+
+//            adapter_Calendar = new CustomAdapter_Calendar(getActivity(),0,data);
+//            SimpleSectionedListAdapter adapter_pinnedListview = new SimpleSectionedListAdapter(getActivity(),
+//                    adapter_Calendar, R.layout.item_event_calendar_header, R.id.tv_header);
+//            adapter_pinnedListview.setSections(data.toArray(new SimpleSectionedListAdapter.Section[0]));
+//            rv.setAdapter(adapter_pinnedListview);
+
+
             rv.setLayoutManager(layoutManager);
             rv.setAdapter(adapter);
         }

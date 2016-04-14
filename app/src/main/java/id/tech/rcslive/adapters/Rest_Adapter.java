@@ -3,6 +3,7 @@ package id.tech.rcslive.adapters;
 /**
  * Created by macbook on 3/31/16.
  */
+import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.Pojo_EventHighlight;
 import id.tech.rcslive.models.Pojo_EventUserJoined;
@@ -52,5 +53,26 @@ public interface Rest_Adapter {
     Call<Pojo_Dokumentasi> get_all_dokumentasi(
             @Query("kind") String kind,
             @Query("id") String id
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_EventUserJoined> get_top_user_joined(
+            @Query("kind") String kind,
+            @Query("id") String id,
+            @Query("limit") String limit
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_Dokumentasi> get_top_dokumentasi(
+            @Query("kind") String kind,
+            @Query("id") String id,
+            @Query("limit") String limit
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_Comment> get_top_comments(
+            @Query("kind") String kind,
+            @Query("id") String id,
+            @Query("limit") String limit
     );
 }

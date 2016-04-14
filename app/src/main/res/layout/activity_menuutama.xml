@@ -10,27 +10,33 @@
 
     <LinearLayout
         android:id="@+id/wrapper_top"
+        android:padding="5dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/btn_back"
-            android:src="@drawable/img_logo_txt"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="5dp"
-            android:layout_margin="10dp"/>
-
         <TextView
             android:textColor="@color/color_text_light"
-            android:text="Live Life ID"
-            android:textSize="20sp"
+            android:text="Regions : "
+            android:paddingLeft="20dp"
             android:textStyle="bold"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btn_region_filter"
+            android:text="Jakarta"
+            android:textColor="@color/color_text_light"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:src="@drawable/img_arrow_down"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
 
     </LinearLayout>
 
@@ -52,7 +58,6 @@
 
         <TextView
             android:id="@+id/tv_nama"
-            android:text="Ridho Maulana"
             android:textColor="@color/color_text_light"
             android:layout_gravity="center"
             android:layout_width="wrap_content"

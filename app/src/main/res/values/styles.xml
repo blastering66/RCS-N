@@ -67,4 +67,10 @@
         <!-- Used for the background -->
 
     </style>
+
+        <style name="SpotsDialogDefault" parent="Base.Theme.AppCompat.Light.Dialog">
+            <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
+            <item name="DialogTitleText">Loading…</item>
+            <item name="DialogSpotCount">5</item>
+        </style>
 </resources>

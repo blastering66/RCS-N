@@ -2,6 +2,7 @@ package id.tech.rcslive.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.util.List;
 
@@ -28,11 +31,19 @@ public class RV_Adapter_Event_Joined extends RecyclerView.Adapter<RV_Adapter_Eve
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final Rowdata_EventUserJoined item = datum.get(position);
 
         holder.tv.setText(item.getUserjoinedName());
-        Glide.with(context).load(item.getUserjoinedPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
+
+        SimpleTarget target  = new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                holder.img.setImageBitmap(resource);
+            }
+        };
+
+        Glide.with(context).load(item.getUserjoinedPhoto()).asBitmap().placeholder(R.drawable.img_empty).into(target);
 
     }
 

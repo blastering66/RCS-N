@@ -4,6 +4,7 @@ package id.tech.rcslive.activity;
  * Created by RebelCreative-A1 on 21/03/2016.
  */
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -15,7 +16,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.fragment.*;
 import id.tech.rcslive.models.Pojo_EventHighlight;
@@ -47,6 +52,11 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     @Bind(R.id.tv_nama)
     TextView tv_Nama;
     SharedPreferences spf;
+    @Bind(R.id.btn_region_filter)
+    Button btn_FilterRegions;
+    @OnClick(R.id.btn_region_filter) void clickFilterPage(){
+        startActivity(new Intent(getApplicationContext(), SearchEvent.class));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +65,7 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         ButterKnife.bind(this);
         ActionBar ac = getSupportActionBar();
         ac.hide();
+
 
         spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
 

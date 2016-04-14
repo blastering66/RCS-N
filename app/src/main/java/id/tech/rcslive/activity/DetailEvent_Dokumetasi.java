@@ -16,12 +16,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import id.tech.rcslive.adapters.RV_Adapter_Event_Dokumentasi;
-import id.tech.rcslive.adapters.RV_Adapter_Event_Joined;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
-import id.tech.rcslive.models.Pojo_EventUserJoined;
 import id.tech.rcslive.models.RowData_Dokumentasi;
-import id.tech.rcslive.models.Rowdata_EventUserJoined;
 import id.tech.rcslive.util.ParameterCollections;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
@@ -41,7 +38,7 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_rv_white_addbtn);
+        setContentView(R.layout.layout_rv_white_add_documentasi);
         ButterKnife.bind(this);
 
         ActionBar ac = getSupportActionBar();
