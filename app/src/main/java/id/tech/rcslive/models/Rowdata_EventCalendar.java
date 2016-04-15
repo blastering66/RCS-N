@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
  * Created by RebelCreative-A1 on 23/03/2016.
  */
 public class Rowdata_EventCalendar {
-
     @SerializedName("id_event")
     @Expose
     private String idEvent;
@@ -48,6 +47,39 @@ public class Rowdata_EventCalendar {
     @SerializedName("event_minjoin")
     @Expose
     private String eventMinjoin;
+    @SerializedName("member_phone")
+    @Expose
+    private String memberPhone;
+    @SerializedName("member_photo")
+    @Expose
+    private String memberPhoto;
+    @SerializedName("member_name")
+    @Expose
+    private String memberName;
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMemberPhone() {
+        return memberPhone;
+    }
+
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone;
+    }
+
+    public String getMemberPhoto() {
+        return memberPhoto;
+    }
+
+    public void setMemberPhoto(String memberPhoto) {
+        this.memberPhoto = memberPhoto;
+    }
 
     public String getEventMinjoin() {
         return eventMinjoin;

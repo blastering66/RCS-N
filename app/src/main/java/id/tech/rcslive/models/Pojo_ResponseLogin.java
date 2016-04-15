@@ -15,6 +15,7 @@ public class Pojo_ResponseLogin {
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
+    @Nullable
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();

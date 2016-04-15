@@ -21,6 +21,7 @@ public class ParameterCollections {
     public static String KIND_USER_JOINED = "joinbyid_event";
     public static String KIND_DOKUMENTASI = "documentationbyid_documentation";
     public static String KIND_COMMENTS_EVENT = "commentsbyid_event";
+    public static String KIND_JOIN = "join_post";
 
     public static String TAG_EMAIL = "email";
     public static String TAG_PASS = "password";

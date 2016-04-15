@@ -26,9 +26,9 @@ public class Rowdata_EventHighlight {
     @SerializedName("tv_kategori")
     @Expose
     private String tvKategori;
-    @SerializedName("joined")
-    @Expose
-    private String joined;
+//    @SerializedName("joined")
+//    @Expose
+//    private String joined;
     @SerializedName("event_photo")
     @Expose
     private String eventPhoto;
@@ -47,6 +47,51 @@ public class Rowdata_EventHighlight {
     @SerializedName("event_minjoin")
     @Expose
     private String eventMinjoin;
+    @SerializedName("total_join")
+    @Expose
+    private String totalJoin;
+
+    public String getTotalJoin() {
+        return totalJoin;
+    }
+
+    public void setTotalJoin(String totalJoin) {
+        this.totalJoin = totalJoin;
+    }
+
+    @SerializedName("member_name")
+    @Expose
+    private String memberName;
+    @SerializedName("member_phone")
+    @Expose
+    private String memberPhone;
+    @SerializedName("member_photo")
+    @Expose
+    private String memberPhoto;
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
+    }
+
+    public String getMemberPhone() {
+        return memberPhone;
+    }
+
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone;
+    }
+
+    public String getMemberPhoto() {
+        return memberPhoto;
+    }
+
+    public void setMemberPhoto(String memberPhoto) {
+        this.memberPhoto = memberPhoto;
+    }
 
     public String getEventMinjoin() {
         return eventMinjoin;
@@ -201,18 +246,13 @@ public class Rowdata_EventHighlight {
      * @return
      * The joined
      */
-    public String getJoined() {
-        return joined;
-    }
+//    public String getJoined() {
+//        return joined;
+//    }
 
-    /**
-     *
-     * @param joined
-     * The joined
-     */
-    public void setJoined(String joined) {
-        this.joined = joined;
-    }
+//    public void setJoined(String joined) {
+//        this.joined = joined;
+//    }
 
 
     public String getEventPhoto() {

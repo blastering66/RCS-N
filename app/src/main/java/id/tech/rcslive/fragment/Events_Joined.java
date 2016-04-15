@@ -84,7 +84,9 @@ public class Events_Joined extends Fragment{
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());
                                 item.setEventPhoto(response_event.body().getData().get(i).getEventPhoto());
                                 item.setJoined("10 Joined");
-                                item.setEventMinjoin("6");
+                                item.setEventMinjoin(response_event.body().getData().get(i).getEventMinjoin());
+                                item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
+                                item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
                                 data.add(item);
                             }
                         }

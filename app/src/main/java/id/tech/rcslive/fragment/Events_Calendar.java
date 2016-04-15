@@ -96,6 +96,9 @@ public class Events_Calendar extends Fragment{
                             item.setJoined(response.body().getData().get(i).getEventMinjoin());
                             item.setEventMinjoin(response.body().getData().get(i).getEventMinjoin());
 
+                            item.setMemberPhone(response.body().getData().get(i).getMemberPhone());
+                            item.setMemberPhoto(response.body().getData().get(i).getMemberPhoto());
+
                             String tgl_spf = spf.getString(ParameterCollections.SPF_SAME_DATE, "");
 
                             if(tgl_spf.equals("") || !tgl_spf.equals(response.body().getData().get(i).getDeadline())){
@@ -113,28 +116,6 @@ public class Events_Calendar extends Fragment{
 
             }
 
-//            Rowdata_EventCalendar item = new Rowdata_EventCalendar();
-//            item.setIdEvent("");
-//            item.setTvTgl("2016-04-09 18:00");
-//            item.setTvJudul("Health Talk AIA");
-//            item.setTvAlamat("");
-//            item.setTvKategori("Umum");
-//            item.setEventPhoto("");
-//            item.setJoined("10 Joined");
-//            item.setEventMinjoin("9");
-//            item.setTypeView(0);
-//            data.add(item);
-//            Rowdata_EventCalendar item2 = new Rowdata_EventCalendar();
-//            item2.setIdEvent("");
-//            item2.setTvTgl("2016-04-10 09:00");
-//            item2.setTvJudul("Badminton - PLN Duren Tiga");
-//            item2.setTvAlamat("");
-//            item2.setTvKategori("Sport");
-//            item2.setEventPhoto("");
-//            item2.setJoined("15 Joined");
-//            item2.setEventMinjoin("10");
-//            item2.setTypeView(1);
-//            data.add(item2);
             return null;
         }
 

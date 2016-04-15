@@ -1,5 +1,7 @@
 package id.tech.rcslive.models;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -11,6 +13,7 @@ public class Pojo_EventHighlight {
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
+    @Nullable
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();
@@ -74,9 +77,9 @@ public class Pojo_EventHighlight {
 
     public class Datum {
 
-        @SerializedName("id")
+        @SerializedName("idevent")
         @Expose
-        private String id;
+        private String id_event;
         @SerializedName("event_creatorid")
         @Expose
         private String eventCreatorid;
@@ -134,6 +137,40 @@ public class Pojo_EventHighlight {
         @SerializedName("event_statusactive")
         @Expose
         private String eventStatusactive;
+        @SerializedName("member_phone")
+        @Expose
+        private String memberPhone;
+        @SerializedName("member_photo")
+        @Expose
+        private String memberPhoto;
+
+        @SerializedName("total_join")
+        @Expose
+        private String totalJoin;
+
+        public String getTotalJoin() {
+            return totalJoin;
+        }
+
+        public void setTotalJoin(String totalJoin) {
+            this.totalJoin = totalJoin;
+        }
+
+        public String getMemberPhone() {
+            return memberPhone;
+        }
+
+        public void setMemberPhone(String memberPhone) {
+            this.memberPhone = memberPhone;
+        }
+
+        public String getMemberPhoto() {
+            return memberPhoto;
+        }
+
+        public void setMemberPhoto(String memberPhoto) {
+            this.memberPhoto = memberPhoto;
+        }
 
         /**
          *
@@ -141,7 +178,7 @@ public class Pojo_EventHighlight {
          * The id
          */
         public String getId() {
-            return id;
+            return id_event;
         }
 
         /**
@@ -150,7 +187,7 @@ public class Pojo_EventHighlight {
          * The id
          */
         public void setId(String id) {
-            this.id = id;
+            this.id_event = id;
         }
 
         /**

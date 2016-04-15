@@ -1,5 +1,7 @@
 package id.tech.rcslive.models;
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -10,6 +12,7 @@ public class Pojo_EventUserJoined {
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
+    @Nullable
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();

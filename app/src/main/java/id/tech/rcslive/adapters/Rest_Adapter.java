@@ -3,6 +3,7 @@ package id.tech.rcslive.adapters;
 /**
  * Created by macbook on 3/31/16.
  */
+import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.Pojo_EventHighlight;
@@ -44,6 +45,13 @@ public interface Rest_Adapter {
     );
 
     @GET("getApi.php?")
+    Call<Pojo_EventHighlight> get_all_events_highlight(
+            @Query("kind") String kind,
+            @Query("display_region") boolean display_region,
+            @Query("limit") String limit
+    );
+
+    @GET("getApi.php?")
     Call<Pojo_EventHighlight> get_all_events_joined(
             @Query("kind") String kind,
             @Query("id") String id
@@ -79,6 +87,21 @@ public interface Rest_Adapter {
     Call<Pojo_Comment> get_top_comments(
             @Query("kind") String kind,
             @Query("id") String id,
-            @Query("limit") String limit
+            @Query("") String limit
+    );
+
+    @FormUrlEncoded
+    @POST("insert.php?")
+    Call<PojoResponseInsert> insert_join_event(
+            @Field("kind") String kind,
+            @Field("eventid") String eventid,
+            @Field("userid") String userid
+    );
+
+    @GET("insert.php?")
+    Call<PojoResponseInsert> insert_join_event_get(
+            @Query("kind") String kind,
+            @Query("eventid") String eventid,
+            @Query("userid") String userid
     );
 }

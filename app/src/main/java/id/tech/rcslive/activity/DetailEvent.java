@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -34,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.blastering99.htmlloader.CustomProgressDialog;
 import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.Pojo_EventUserJoined;
@@ -91,8 +94,22 @@ public class DetailEvent extends AppCompatActivity {
     TextView tv_no_comment;
     @Bind(R.id.btn_more_people_joined_img) CircularImageView btn_more_people_joined_img;
     @Bind(R.id.btn_gallery_img) ImageView btn_gallery_img;
+    @Bind(R.id.img_pic) CircularImageView img_pic;
+    @Bind(R.id.tv_pic) TextView tv_pic;
+    @Bind(R.id.btn_call_pic) ImageView btn_call_pic;
+    String member_phone;
+    String id_user;
 
     private Activity activity;
+
+    @OnClick(R.id.btn_call_pic) void onClick_CallPIC(){
+        try {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + member_phone)));
+        }catch (SecurityException e){
+
+        }
+
+    }
 
     @OnClick(R.id.btn_more_people_joined_img) void onClickMorePeopleJoined(){
         Intent intent = new Intent(getApplicationContext(), DetailEvent_UserJoined.class);
@@ -149,6 +166,7 @@ public class DetailEvent extends AppCompatActivity {
         activity = this;
         ButterKnife.bind(this);
         spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
+        id_user = spf.getString(ParameterCollections.SPF_USER_ID, "");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -175,6 +193,21 @@ public class DetailEvent extends AppCompatActivity {
         String lat_event = getIntent().getStringExtra("lat_event");
         String lon_event = getIntent().getStringExtra("lon_event");
         String desc_event = getIntent().getStringExtra("desc_event");
+
+        String member_name = getIntent().getStringExtra("member_name");
+        member_phone = getIntent().getStringExtra("member_phone");
+        String member_photo = getIntent().getStringExtra("member_photo");
+
+        Target target = new SimpleTarget<Bitmap>(){
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                img_pic.setImageBitmap(resource);
+            }
+        };
+
+        Glide.with(this).load(member_photo).asBitmap().into(target);
+        tv_pic.setText(member_name);
+
         id_event = getIntent().getStringExtra("id_event");
         event_documentationid = getIntent().getStringExtra("event_documentationid");
 
@@ -233,6 +266,7 @@ public class DetailEvent extends AppCompatActivity {
     private class AsyncTask_JoinEvent extends AsyncTask<Void, Void, Void> {
         //        private CustomProgressDialog loader;
         private CustomProgressDialog loader;
+        boolean isSuccess = false;
 
         @Override
         protected void onPreExecute() {
@@ -245,9 +279,28 @@ public class DetailEvent extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                Thread.sleep(5000);
-            } catch (Exception e) {
+                Rest_Adapter adapter = PublicFunctions.initRetrofit();
+                Call<PojoResponseInsert> call = adapter.insert_join_event(
+                        ParameterCollections.KIND_JOIN, id_event,id_user);
+//                Call<PojoResponseInsert> call = adapter.insert_join_event_get();
 
+                Response<PojoResponseInsert> response = call.execute();
+
+                if(response.isSuccess()){
+                    if(response.body() != null){
+                        if(response.body().getJsonCode().equals("1")){
+                            if(response.body().getData().equals("1")){
+                                isSuccess = true;
+                            }
+                        }
+                    }
+                }
+
+            } catch (IOException e) {
+                Log.e("Error = " ,e.getMessage().toString());
+
+            }catch (Exception e) {
+                Log.e("Error = " , e.getMessage().toString());
             }
 
             return null;
@@ -258,8 +311,16 @@ public class DetailEvent extends AppCompatActivity {
             super.onPostExecute(aVoid);
             loader.dismiss();
 
-//            Snackbar.make(view, "Event Joined", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show();
+            if(isSuccess){
+                View view = findViewById(R.id.fab);
+                Snackbar.make(view, "Event Joined", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }else{
+                View view = findViewById(R.id.fab);
+                Snackbar.make(view, "Fail to Join", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+
 
         }
     }
@@ -277,24 +338,27 @@ public class DetailEvent extends AppCompatActivity {
                 Response<Pojo_EventUserJoined> response = call.execute();
 
                 if (response.isSuccess()) {
-                    if (response.body().getJsonCode().equals("1")) {
-                        isRestSucceded = true;
-                        if (response.body().getData().size() == 3) {
-                            for (int i = 0; i < response.body().getData().size(); i++) {
-                                switch (i) {
-                                    case 0:
-                                        url1 = response.body().getData().get(i).getUserjoinedPhoto();
-                                        break;
-                                    case 1:
-                                        url2 = response.body().getData().get(i).getUserjoinedPhoto();
-                                        break;
-                                    case 2:
-                                        url3 = response.body().getData().get(i).getUserjoinedPhoto();
-                                        break;
+                    if(response.body() != null){
+                        if (response.body().getJsonCode().equals("1")) {
+                            isRestSucceded = true;
+                            if (response.body().getData().size() == 3) {
+                                for (int i = 0; i < response.body().getData().size(); i++) {
+                                    switch (i) {
+                                        case 0:
+                                            url1 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            break;
+                                        case 1:
+                                            url2 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            break;
+                                        case 2:
+                                            url3 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            break;
+                                    }
                                 }
                             }
                         }
                     }
+
                 }
             } catch (IOException e) {
 
@@ -361,22 +425,25 @@ public class DetailEvent extends AppCompatActivity {
                 Response<Pojo_Dokumentasi> response = call.execute();
 
                 if (response.isSuccess()) {
-                    if (response.body().getJsonCode().equals("1")) {
-                        isRestSuccess = true;
-                        for (int i = 0; i < response.body().getData().size(); i++) {
-                            switch (i) {
-                                case 0:
-                                    url1 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
-                                    break;
-                                case 1:
-                                    url2 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
-                                    break;
-                                case 2:
-                                    url3 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
-                                    break;
+                    if(response.body() != null){
+                        if (response.body().getJsonCode().equals("1")) {
+                            isRestSuccess = true;
+                            for (int i = 0; i < response.body().getData().size(); i++) {
+                                switch (i) {
+                                    case 0:
+                                        url1 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
+                                        break;
+                                    case 1:
+                                        url2 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
+                                        break;
+                                    case 2:
+                                        url3 = ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto();
+                                        break;
+                                }
                             }
                         }
                     }
+
                 }
             } catch (IOException e) {
 
@@ -442,18 +509,21 @@ public class DetailEvent extends AppCompatActivity {
             try {
                 Response<Pojo_Comment> response = call.execute();
                 if (response.isSuccess()) {
-                    if (response.body().getJsonCode().equals("1")) {
-                        if (response.body().getData().size() == 2) {
-                            isCallSucceed = true;
-                            cCommentor00 = response.body().getData().get(0).getMemberName();
-                            cComment00 = response.body().getData().get(0).getCommentsText();
-                            cPhotoCommentor00 = response.body().getData().get(0).getMemberPhoto();
+                    if(response.body() != null){
+                        if (response.body().getJsonCode().equals("1") ) {
+                            if (response.body().getData().size() == 2) {
+                                isCallSucceed = true;
+                                cCommentor00 = response.body().getData().get(0).getMemberName();
+                                cComment00 = response.body().getData().get(0).getCommentsText();
+                                cPhotoCommentor00 = response.body().getData().get(0).getMemberPhoto();
 
-                            cCommentor01 = response.body().getData().get(1).getMemberName();
-                            cComment01 = response.body().getData().get(1).getCommentsText();
-                            cPhotoCommentor01 = response.body().getData().get(1).getMemberPhoto();
+                                cCommentor01 = response.body().getData().get(1).getMemberName();
+                                cComment01 = response.body().getData().get(1).getCommentsText();
+                                cPhotoCommentor01 = response.body().getData().get(1).getMemberPhoto();
+                            }
                         }
                     }
+
 
                 } else {
 

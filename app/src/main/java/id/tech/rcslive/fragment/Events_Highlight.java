@@ -81,7 +81,8 @@ public class Events_Highlight extends Fragment {
         protected Void doInBackground(Void... params) {
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
 
-            Call<Pojo_EventHighlight> call = adapter.get_all_events(ParameterCollections.KIND_EVENT);
+            Call<Pojo_EventHighlight> call = adapter.get_all_events_highlight(ParameterCollections.KIND_EVENT,
+                    true, "3");
 
             try{
                 Response<Pojo_EventHighlight> response_event = call.execute();
@@ -101,7 +102,10 @@ public class Events_Highlight extends Fragment {
                                 item.setEventMinjoin(response_event.body().getData().get(i).getEventMinjoin());
                                 item.setEventDescription(response_event.body().getData().get(i).getEventDescription());
                                 item.setEventDocumentationid(response_event.body().getData().get(i).getEventDocumentationid());
-                                item.setJoined("0 Joined");
+                                item.setMemberName(response_event.body().getData().get(i).getMemberName());
+                                item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
+                                item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
+                                item.setTotalJoin(response_event.body().getData().get(i).getTotalJoin());
                                 data.add(item);
                             }
                         }

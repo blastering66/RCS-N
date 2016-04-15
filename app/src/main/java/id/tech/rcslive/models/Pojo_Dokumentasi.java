@@ -4,6 +4,8 @@ package id.tech.rcslive.models;
  * Created by macbook on 4/3/16.
  */
 
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Pojo_Dokumentasi {
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
+    @Nullable
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();

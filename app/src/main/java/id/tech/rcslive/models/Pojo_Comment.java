@@ -3,6 +3,8 @@ package id.tech.rcslive.models;
 /**
  * Created by macbook on 4/14/16.
  */
+import android.support.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -12,6 +14,7 @@ public class Pojo_Comment {
     @SerializedName("json_code")
     @Expose
     private String jsonCode;
+    @Nullable
     @SerializedName("data")
     @Expose
     private List<Datum> data = new ArrayList<Datum>();

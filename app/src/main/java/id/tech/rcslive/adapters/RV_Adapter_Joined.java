@@ -65,6 +65,9 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
                 intent.putExtra("lon_event", item.getEventLon());
                 intent.putExtra("desc_event", item.getEventDescription());
                 intent.putExtra("event_documentationid", item.getEventDocumentationid());
+                intent.putExtra("member_name", item.getMemberName());
+                intent.putExtra("member_phone", item.getMemberPhone());
+                intent.putExtra("member_photo", item.getMemberPhoto());
                 context.startActivity(intent);
             }
         });
