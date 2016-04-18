@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -34,12 +37,7 @@ public class Events_Joined extends Fragment{
     RecyclerView rv;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    ImageView btn_refresh;
 
     @Nullable
     @Override
@@ -47,7 +45,13 @@ public class Events_Joined extends Fragment{
         View view = inflater.inflate(R.layout.layout_rv, null);
         rv = (RecyclerView)view.findViewById(R.id.rv);
 
-
+        btn_refresh = (ImageView)view.findViewById(R.id.btn_refresh);
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ASyncTask_GetAllEvent_Joined().execute();
+            }
+        });
         new ASyncTask_GetAllEvent_Joined().execute();
         return view;
     }
@@ -55,11 +59,18 @@ public class Events_Joined extends Fragment{
     private class ASyncTask_GetAllEvent_Joined extends AsyncTask<Void,Void,Void> {
         String cCode="0";
         List<Rowdata_EventJoined> data;
+        Animation animation;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             data = new ArrayList<>();
+            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
         }
 
         @Override
@@ -72,6 +83,7 @@ public class Events_Joined extends Fragment{
 
             try{
                 Response<Pojo_EventHighlight> response_event = call.execute();
+                Thread.sleep(1000);
                 if(response_event.isSuccess()){
                     if(response_event.body().getJsonCode().equals("1")){
                         if(response_event.body().getData() != null){
@@ -97,6 +109,8 @@ public class Events_Joined extends Fragment{
                 }
             }catch (IOException e){
 
+            }catch (Exception e){
+
             }
             return null;
         }
@@ -105,12 +119,19 @@ public class Events_Joined extends Fragment{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(cCode.equals("1")){
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+
                 layoutManager = new GridLayoutManager(getContext(),1);
                 adapter = new RV_Adapter_Joined(getActivity(), data);
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
                 Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
             }
         }
     }

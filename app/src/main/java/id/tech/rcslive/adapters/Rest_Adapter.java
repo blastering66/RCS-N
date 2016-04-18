@@ -3,6 +3,7 @@ package id.tech.rcslive.adapters;
 /**
  * Created by macbook on 3/31/16.
  */
+import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
@@ -36,6 +37,15 @@ public interface Rest_Adapter {
     @GET("getApi.php?")
     Call<Pojo_EventHighlight> get_all_events(
             @Query("kind") String kind
+    );
+
+    @GET("json?")
+    Call<PojoResponseGmap> calculate_distance(
+            @Query("origin") String latlongi_origin,
+            @Query("destination") String latlongi_destination,
+            @Query("sensor") String sensor_false,
+            @Query("units") String metric
+
     );
 
     @GET("getApi.php?")
@@ -87,7 +97,13 @@ public interface Rest_Adapter {
     Call<Pojo_Comment> get_top_comments(
             @Query("kind") String kind,
             @Query("id") String id,
-            @Query("") String limit
+            @Query("limit") String limit
+    );
+
+    @GET("getApi.php?")
+    Call<Pojo_Comment> get_all_event_comments(
+            @Query("kind") String kind,
+            @Query("id") String id
     );
 
     @FormUrlEncoded

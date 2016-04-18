@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import id.blastering99.htmlloader.CustomProgressDialog;
 import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
@@ -99,6 +100,7 @@ public class DetailEvent extends AppCompatActivity {
     @Bind(R.id.btn_call_pic) ImageView btn_call_pic;
     String member_phone;
     String id_user;
+    String now_latitude, now_longitude, lat_event, lon_event;
 
     private Activity activity;
 
@@ -154,7 +156,7 @@ public class DetailEvent extends AppCompatActivity {
     @OnClick(R.id.btn_more_komentar)
     void onCLickMoreKomentar() {
         Intent intent = new Intent(getApplicationContext(), DetailEvent_Comment.class);
-        intent.putExtra("event_documentationid", event_documentationid);
+        intent.putExtra("id_event", id_event);
         startActivity(intent);
 
     }
@@ -175,11 +177,11 @@ public class DetailEvent extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //onBackPressed()
                 finish();
             }
         });
+
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppBar);
         mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
@@ -190,8 +192,8 @@ public class DetailEvent extends AppCompatActivity {
         String judul_event = getIntent().getStringExtra("judul_event");
         String alamat_event = getIntent().getStringExtra("alamat_event");
         String tgl_event = getIntent().getStringExtra("tgl_event");
-        String lat_event = getIntent().getStringExtra("lat_event");
-        String lon_event = getIntent().getStringExtra("lon_event");
+        lat_event = getIntent().getStringExtra("lat_event");
+        lon_event = getIntent().getStringExtra("lon_event");
         String desc_event = getIntent().getStringExtra("desc_event");
 
         String member_name = getIntent().getStringExtra("member_name");
@@ -218,8 +220,8 @@ public class DetailEvent extends AppCompatActivity {
 
         PublicFunctions.getLocationNow(getApplicationContext(), spf);
 
-        String now_latitude = spf.getString(ParameterCollections.TAG_LATITUDE_NOW, "0");
-        String now_longitude = spf.getString(ParameterCollections.TAG_LONGITUDE_NOW, "0");
+        now_latitude        = spf.getString(ParameterCollections.TAG_LATITUDE_NOW, "0");
+        now_longitude = spf.getString(ParameterCollections.TAG_LONGITUDE_NOW, "0");
 
         String url_map = "http://maps.google.com/maps/api/staticmap?center="
                 + lat_event
@@ -234,26 +236,11 @@ public class DetailEvent extends AppCompatActivity {
         Glide.with(this).load(url_map).into(img_map);
         Glide.with(this).load(url_photo_event).into(img_event);
 
-//        Location selected_location=new Location("location_user");
-//        selected_location.setLatitude(Double.parseDouble(now_latitude));
-//        selected_location.setLongitude(Double.parseDouble(now_longitude));
-//        Location near_locations=new Location("location_event");
-//        near_locations.setLatitude(Double.parseDouble(lat_event));
-//        near_locations.setLongitude(Double.parseDouble(lon_event));
-//        double distance=selected_location.distanceTo(near_locations);
-//        tv_jarak.setText(String.valueOf(Math.round(distance)+ " Meter"));
-        tv_jarak.setText(String.valueOf("30 Km"));
-        tv_waktu_tempuh.setText("1 Hour Estimated");
-//        img_joined_1;
-//        img_joined_2;
-//        img_joined_3;
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                startActivity(new Intent(getApplicationContext(), Loader.class));
                 new AsyncTask_JoinEvent().execute();
             }
         });
@@ -261,6 +248,47 @@ public class DetailEvent extends AppCompatActivity {
         new AsyncTask_LoadTopComment().execute();
         new AsyncTask_LoadTopDokumentasi().execute();
         new AsyncTask_LoadTopUserJoined().execute();
+        new ASyncTask_CalculateDistance().execute();
+    }
+
+    private class ASyncTask_CalculateDistance extends AsyncTask<Void,Void,Void>{
+        String distance, duration;
+        boolean isSukses= false;
+        @Override
+        protected Void doInBackground(Void... params) {
+            try{
+                Rest_Adapter adapter = PublicFunctions.initRetrofit_Gmaps();
+                Call<PojoResponseGmap> call = adapter.calculate_distance(now_latitude + "," + now_longitude,
+                        lat_event + "," + lon_event, "false", "metric");
+                Response<PojoResponseGmap> response = call.execute();
+                if(response.isSuccess()){
+                    if(response.body() != null){
+                        isSukses = true;
+                        distance = response.body().getRoutes().get(0).getLegs().get(0).getDistance().getText();
+                        duration = response.body().getRoutes().get(0).getLegs().get(0).getDuration().getText();
+                    }
+
+                }
+            }catch (IOException e){
+
+            }
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if(isSukses){
+                tv_jarak.setText("Distance " + distance);
+                tv_waktu_tempuh.setText("Estimated Time " + duration );
+            }else{
+                tv_jarak.setText("");
+                tv_waktu_tempuh.setText("");
+            }
+
+        }
     }
 
     private class AsyncTask_JoinEvent extends AsyncTask<Void, Void, Void> {

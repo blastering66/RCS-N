@@ -18,7 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 //import dev.dworks.libs.astickyheader.SimpleSectionedListAdapter;
 //import dev.dworks.libs.astickyheader.ui.PinnedSectionListView;
@@ -48,6 +52,7 @@ public class Events_Calendar extends Fragment{
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     SharedPreferences spf;
+    ImageView btn_refresh;
 
     @Nullable
     @Override
@@ -56,6 +61,14 @@ public class Events_Calendar extends Fragment{
         rv = (RecyclerView)view.findViewById(R.id.rv);
 
         spf = getActivity().getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
+        btn_refresh = (ImageView)view.findViewById(R.id.btn_refresh);
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AsyncTask_GetAll_EventByCalendar().execute();
+            }
+        });
+
         new AsyncTask_GetAll_EventByCalendar().execute();
         return view;
     }
@@ -64,11 +77,19 @@ public class Events_Calendar extends Fragment{
         String cCode="0";
         List<Rowdata_EventCalendar> data;
         CustomAdapter_Calendar adapter_Calendar;
+        Animation animation;
+        boolean isSukses = false;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             data = new ArrayList<>();
+            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
         }
 
         @Override
@@ -80,10 +101,11 @@ public class Events_Calendar extends Fragment{
 
             try{
                 Response<Pojo_EventHighlight> response = call.execute();
-
+                Thread.sleep(1000);
                 if(response.isSuccess()){
                     if(response.body().getJsonCode().equals("1")){
                         for(int i=0; i < response.body().getData().size(); i++){
+                            isSukses = true;
                             Rowdata_EventCalendar item = new Rowdata_EventCalendar();
                             item.setIdEvent(response.body().getData().get(i).getId());
                             item.setTvTgl(response.body().getData().get(i).getDeadline());
@@ -114,6 +136,8 @@ public class Events_Calendar extends Fragment{
                 }
             }catch (IOException e){
 
+            }catch (Exception e){
+
             }
 
             return null;
@@ -123,18 +147,21 @@ public class Events_Calendar extends Fragment{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            layoutManager = new GridLayoutManager(getContext(),1);
-            adapter = new RV_Adapter_Calendar(getActivity(), data);
+            if(isSukses){
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+                layoutManager = new GridLayoutManager(getContext(),1);
+                adapter = new RV_Adapter_Calendar(getActivity(), data);
+                rv.setLayoutManager(layoutManager);
+                rv.setAdapter(adapter);
+            }else{
+                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
+            }
 
-//            adapter_Calendar = new CustomAdapter_Calendar(getActivity(),0,data);
-//            SimpleSectionedListAdapter adapter_pinnedListview = new SimpleSectionedListAdapter(getActivity(),
-//                    adapter_Calendar, R.layout.item_event_calendar_header, R.id.tv_header);
-//            adapter_pinnedListview.setSections(data.toArray(new SimpleSectionedListAdapter.Section[0]));
-//            rv.setAdapter(adapter_pinnedListview);
-
-
-            rv.setLayoutManager(layoutManager);
-            rv.setAdapter(adapter);
         }
     }
 }

@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -31,20 +35,25 @@ public class Events_Highlight extends Fragment {
     RecyclerView rv;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        new ASyncTask_GetAllEvent().execute();
-    }
+    ImageView btn_refresh;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_rv, null);
         rv = (RecyclerView)view.findViewById(R.id.rv);
+
         layoutManager = new GridLayoutManager(getContext(),1);
 
+        btn_refresh = (ImageView)view.findViewById(R.id.btn_refresh);
+        btn_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ASyncTask_GetAllEvent().execute();
+            }
+        });
+
+        new ASyncTask_GetAllEvent().execute();
 //        List<Rowdata_EventHighlight> data = new ArrayList<>();
 //        Rowdata_EventHighlight item = new Rowdata_EventHighlight();
 //        item.setIdEvent("1");
@@ -70,11 +79,19 @@ public class Events_Highlight extends Fragment {
     private class ASyncTask_GetAllEvent extends AsyncTask<Void,Void,Void> {
         String cCode="0";
         List<Rowdata_EventHighlight> data;
+        Animation animation;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             data = new ArrayList<>();
+
+            animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
         }
 
         @Override
@@ -85,6 +102,7 @@ public class Events_Highlight extends Fragment {
                     true, "3");
 
             try{
+                Thread.sleep(1000);
                 Response<Pojo_EventHighlight> response_event = call.execute();
                 if(response_event.isSuccess()){
                     if(response_event.body().getJsonCode().equals("1")){
@@ -116,6 +134,8 @@ public class Events_Highlight extends Fragment {
                 }
             }catch (IOException e){
 
+            }catch (Exception e){
+
             }
             return null;
         }
@@ -124,11 +144,18 @@ public class Events_Highlight extends Fragment {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(cCode.equals("1")){
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+
                 adapter = new RV_Adapter_Highlight(getContext(), data);
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
                 Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
             }
         }
     }

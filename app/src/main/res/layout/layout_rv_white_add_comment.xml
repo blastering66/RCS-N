@@ -12,6 +12,14 @@
         />
 
 
+    <ImageView
+        android:id="@+id/btn_refresh"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:src="@drawable/img_reload"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
     <RelativeLayout
         android:padding="5dp"
         android:layout_alignParentBottom="true"
