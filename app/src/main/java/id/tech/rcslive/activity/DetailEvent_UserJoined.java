@@ -6,7 +6,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +21,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.tech.rcslive.adapters.RV_Adapter_Event_Joined;
 import id.tech.rcslive.adapters.RV_Adapter_Highlight;
 import id.tech.rcslive.adapters.RV_Adapter_Joined;
@@ -37,14 +43,20 @@ public class DetailEvent_UserJoined extends AppCompatActivity{
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     String id_event,event_documentationid;
+    @Bind(R.id.btn_refresh)
+    ImageView btn_refresh;
+    @OnClick(R.id.btn_refresh) void onClickRefresh(){
+        new AsyncTask_LoadUserJoined().execute();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_rv_white);
+        setContentView(R.layout.layout_rv_white_refreshable);
         ButterKnife.bind(this);
         id_event = getIntent().getStringExtra("id_event");
 
+        Log.e("id_event joined", id_event);
 
         ActionBar ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
@@ -58,10 +70,17 @@ public class DetailEvent_UserJoined extends AppCompatActivity{
     private class AsyncTask_LoadUserJoined extends AsyncTask<Void,Void,Void>{
         String cCode="0";
         List<Rowdata_EventUserJoined> data;
+        Animation animation;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             data = new ArrayList<>();
+            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
         }
 
         @Override
@@ -102,11 +121,18 @@ public class DetailEvent_UserJoined extends AppCompatActivity{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(cCode.equals("1")){
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+
                 adapter = new RV_Adapter_Event_Joined(getApplicationContext(), data);
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
                 Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
             }
         }
     }

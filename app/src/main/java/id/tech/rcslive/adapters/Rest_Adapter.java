@@ -3,6 +3,8 @@ package id.tech.rcslive.adapters;
 /**
  * Created by macbook on 3/31/16.
  */
+import com.squareup.okhttp.RequestBody;
+
 import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
@@ -119,5 +121,31 @@ public interface Rest_Adapter {
             @Query("kind") String kind,
             @Query("eventid") String eventid,
             @Query("userid") String userid
+    );
+
+    @Multipart
+    @POST("insert.php?")
+    Call<PojoResponseInsert> insert_event_comment(
+            @Query("kind") String kind,
+            @Part("eventid") RequestBody eventid,
+            @Part("userid") RequestBody userid,
+            @Part("text") RequestBody comment
+    );
+
+    @FormUrlEncoded
+    @POST("insert.php?kind=comments")
+    Call<PojoResponseInsert> insert_event_comment_test(
+            @Field("eventid") String eventid,
+            @Field("userid") String userid,
+            @Field("text") String comment
+    );
+
+    @Multipart
+    @POST("insert.php?")
+    Call<PojoResponseInsert> insert_event_dokumentasi(
+            @Query("kind") String kind,
+            @Field("eventid") String eventid,
+            @Field("userid") String userid,
+            @Part("") RequestBody photo
     );
 }

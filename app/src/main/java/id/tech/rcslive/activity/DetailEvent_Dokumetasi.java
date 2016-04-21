@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -15,6 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import id.tech.rcslive.adapters.RV_Adapter_Event_Dokumentasi;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
@@ -34,6 +39,11 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     String event_documentationid;
+    @Bind(R.id.btn_refresh)
+    ImageView btn_refresh;
+    @OnClick(R.id.btn_refresh) void onClickRefresh(){
+        new AsyncTask_LoadDokumentasi().execute();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +64,18 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
     private class AsyncTask_LoadDokumentasi extends AsyncTask<Void,Void,Void>{
         String cCode="1";
         List<RowData_Dokumentasi> data;
+        Animation animation;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             data = new ArrayList<>();
+            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
         }
 
         @Override
@@ -73,20 +91,20 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
             try{
                 Response<Pojo_Dokumentasi> response = call.execute();
                 if(response.isSuccess()){
-                    if(response.body().getJsonCode().equals("1")){
-                        if(response.body().getData() != null){
-                            for(int i=0; i< response.body().getData().size(); i++){
-//                                RowData_Dokumentasi item= new RowData_Dokumentasi();
-//                                item.setId(response.body().getData().get(i).getId());
-//                                item.setDocumentationPhoto(ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto());
-//                                data.add(item);
+                    if(response.body() != null){
+                        if(response.body().getJsonCode().equals("1")){
+                            if(response.body().getData() != null){
+                                for(int i=0; i< response.body().getData().size(); i++){
+                                    RowData_Dokumentasi item= new RowData_Dokumentasi();
+                                    item.setId(response.body().getData().get(i).getId());
+                                    item.setDocumentationPhoto(ParameterCollections.BASE_URL_IMG + response.body().getData().get(i).getDocumentationPhoto());
+                                    data.add(item);
 
+                                }
+                                cCode=response.body().getJsonCode();
                             }
-                            cCode=response.body().getJsonCode();
                         }
                     }
-
-
 
                 }
             }catch (IOException e){
@@ -99,11 +117,18 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(cCode.equals("1")){
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+
                 adapter = new RV_Adapter_Event_Dokumentasi(getApplicationContext(), data);
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
                 Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
             }
         }
     }

@@ -41,8 +41,8 @@
 
         <activity android:name=".DetailEvent" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".DetailEvent_UserJoined" />
-        <activity android:name=".DetailEvent_Dokumetasi" />
-        <activity android:name=".DetailEvent_Comment" />
+        <activity android:name=".DetailEvent_Dokumetasi" android:theme="@style/AppTheme"/>
+        <activity android:name=".DetailEvent_Comment" android:theme="@style/AppTheme" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

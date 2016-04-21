@@ -1,17 +1,25 @@
 package id.tech.rcslive.activity;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.RequestBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,9 +28,12 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import id.blastering99.htmlloader.CustomProgressDialog;
 import id.tech.rcslive.adapters.RV_Adapter_All_Event_Comments;
 import id.tech.rcslive.adapters.RV_Adapter_Event_Dokumentasi;
 import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.dialogs.DialogFragmentProgress;
+import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.RowData_Dokumentasi;
@@ -37,49 +48,107 @@ import retrofit.Retrofit;
  * Created by macbook on 4/4/16.
  */
 public class DetailEvent_Comment  extends AppCompatActivity {
+    Activity activity;
     @Bind(R.id.rv)
     RecyclerView rv;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
-    String id_event;
+    String id_event, id_user;
     @Bind(R.id.btn_refresh)
     ImageView btn_refresh;
     @OnClick(R.id.btn_refresh) void onClickRefresh(){
         new AsyncTask_LoadComments().execute();
     }
+    @Bind(R.id.ed_text)
+    EditText ed_Text;
+    @Bind(R.id.btn)Button btn_send;
+    @OnClick(R.id.btn) void sendData(){
+        txt = ed_Text.getText().toString();
+        if(!txt.equals("") || txt != null){
+            new AsyncTask_SendData().execute();
+        }
+    }
+    String txt;
+    SharedPreferences spf;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_rv_white_add_comment);
+        activity = this;
         ButterKnife.bind(this);
 
         ActionBar ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Event Comments");
 
+        spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
+        id_user = spf.getString(ParameterCollections.SPF_USER_ID, "");
         id_event= getIntent().getStringExtra("id_event");
-        layoutManager = new GridLayoutManager(getApplicationContext(),3);
+
+        layoutManager = new GridLayoutManager(getApplicationContext(),1);
 
         new AsyncTask_LoadComments().execute();
     }
 
-    private class AsyncTask_Dummy extends AsyncTask<Void,Void,Void>{
+    private class AsyncTask_SendData extends AsyncTask<Void,Void,Void>{
+        private boolean isSukses =false;
+        private CustomProgressDialog pDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
+            pDialog = new CustomProgressDialog(activity, R.style.SpotsDialogDefault);
+            pDialog.setLoaderType(CustomProgressDialog.SPINNING_SQUARE);
+            pDialog.show();
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            try{
+                Thread.sleep(1000);
+                Retrofit retrofit = new Retrofit.Builder().baseUrl(ParameterCollections.BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create()).build();
+                Rest_Adapter adapter = retrofit.create(Rest_Adapter.class);
+
+                RequestBody _id_event = RequestBody.create(MediaType.parse("text/plain"), id_event);
+                RequestBody _id_user = RequestBody.create(MediaType.parse("text/plain"), id_user);
+                RequestBody _txt = RequestBody.create(MediaType.parse("text/plain"), txt);
+
+//                Call<PojoResponseInsert> call = adapter.insert_event_comment(
+//                        ParameterCollections.KIND_COMMENTS_INSERT, _id_event, _id_user, _txt);
+                Call<PojoResponseInsert> call = adapter.insert_event_comment_test(id_event, id_user, txt);
+
+                Response<PojoResponseInsert> response = call.execute();
+
+                if(response.isSuccess()){
+                    if(response.body() != null ){
+                        if(response.body().getJsonCode().equals("1")){
+                            isSukses = true;
+                        }
+                    }
+                }
+            }catch (IOException e){
+                Log.e("Error", e.getMessage().toString());
+
+            }catch (Exception e){
+                Log.e("Error", e.getMessage().toString());
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            pDialog.dismiss();
+            new AsyncTask_LoadComments().execute();
+            if(isSukses){
+                new AsyncTask_LoadComments().execute();
+            }else{
+                Toast.makeText(getApplicationContext(), "Failed to Comment", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

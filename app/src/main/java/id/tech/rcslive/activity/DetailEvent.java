@@ -195,10 +195,13 @@ public class DetailEvent extends AppCompatActivity {
         lat_event = getIntent().getStringExtra("lat_event");
         lon_event = getIntent().getStringExtra("lon_event");
         String desc_event = getIntent().getStringExtra("desc_event");
-
         String member_name = getIntent().getStringExtra("member_name");
         member_phone = getIntent().getStringExtra("member_phone");
         String member_photo = getIntent().getStringExtra("member_photo");
+        id_event = getIntent().getStringExtra("id_event");
+        event_documentationid = getIntent().getStringExtra("event_documentationid");
+
+        Log.e("id_event detail", id_event);
 
         Target target = new SimpleTarget<Bitmap>(){
             @Override
@@ -210,8 +213,7 @@ public class DetailEvent extends AppCompatActivity {
         Glide.with(this).load(member_photo).asBitmap().into(target);
         tv_pic.setText(member_name);
 
-        id_event = getIntent().getStringExtra("id_event");
-        event_documentationid = getIntent().getStringExtra("event_documentationid");
+
 
         mCollapsingToolbarLayout.setTitle(judul_event);
         tv_alamat.setText(alamat_event);
@@ -354,7 +356,7 @@ public class DetailEvent extends AppCompatActivity {
     }
 
     private class AsyncTask_LoadTopUserJoined extends AsyncTask<Void, Void, Void> {
-        private String url1, url2, url3;
+        private String url1, url2, url3= null;
         private boolean isRestSucceded = false;
 
         @Override
@@ -368,8 +370,8 @@ public class DetailEvent extends AppCompatActivity {
                 if (response.isSuccess()) {
                     if(response.body() != null){
                         if (response.body().getJsonCode().equals("1")) {
-                            isRestSucceded = true;
-                            if (response.body().getData().size() == 3) {
+                            if (response.body().getData().size() > 0) {
+                                isRestSucceded = true;
                                 for (int i = 0; i < response.body().getData().size(); i++) {
                                     switch (i) {
                                         case 0:
@@ -398,34 +400,41 @@ public class DetailEvent extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if(isRestSucceded){
-                img_joined_1.setVisibility(View.VISIBLE);
-                img_joined_2.setVisibility(View.VISIBLE);
-                img_joined_3.setVisibility(View.VISIBLE);
 
-                SimpleTarget target  = new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                        img_joined_1.setImageBitmap(resource);
-                    }
-                };
+                if(url1 != null){
+                    img_joined_1.setVisibility(View.VISIBLE);
+                    SimpleTarget target  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_joined_1.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(url2).asBitmap().into(target);
+                }
 
-                SimpleTarget target2  = new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                        img_joined_2.setImageBitmap(resource);
-                    }
-                };
+                if(url2 != null){
+                    img_joined_2.setVisibility(View.VISIBLE);
+                    SimpleTarget target2  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_joined_2.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(url2).asBitmap().into(target2);
+                }
 
-                SimpleTarget target3  = new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                        img_joined_3.setImageBitmap(resource);
-                    }
-                };
+                if( url3 != null){
+                    img_joined_3.setVisibility(View.VISIBLE);
+                    SimpleTarget target3  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_joined_3.setImageBitmap(resource);
+                            }
+                    };
+                    Glide.with(activity).load(url3).asBitmap().into(target3);
+                }
 
-                Glide.with(activity).load(url2).asBitmap().into(target);
-                Glide.with(activity).load(url2).asBitmap().into(target2);
-                Glide.with(activity).load(url3).asBitmap().into(target3);
+
             }
         }
     }

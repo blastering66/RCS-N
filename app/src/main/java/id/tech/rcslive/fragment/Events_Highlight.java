@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,6 +126,8 @@ public class Events_Highlight extends Fragment {
                                 item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
                                 item.setTotalJoin(response_event.body().getData().get(i).getTotalJoin());
                                 data.add(item);
+
+                                Log.e("id_event = ", response_event.body().getData().get(i).getId());
                             }
                         }
                     }

@@ -237,16 +237,19 @@ public class LoginForm  extends AppCompatActivity {
             try{
                 Response<Pojo_ResponseLogin> response = call.execute();
                 if(response.isSuccess()){
-                    cCode= response.body().getJsonCode().toString();
-                    cResponse= response.body().getResponse().toString();
-                    String id = response.body().getData().get(0).getId();
-                    String name = response.body().getData().get(0).getMemberName();
-                    String url_photo = response.body().getData().get(0).getMemberPhoto();
+                    if(response.body() != null){
 
-                    spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
-                    spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();
-                    spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_photo).commit();
-                    spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+                        cCode= response.body().getJsonCode().toString();
+                        cResponse= response.body().getResponse().toString();
+                        String id = response.body().getData().get(0).getId();
+                        String name = response.body().getData().get(0).getMemberName();
+                        String url_photo = response.body().getData().get(0).getMemberPhoto();
+
+                        spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
+                        spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();
+                        spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_photo).commit();
+                        spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+                    }
 
                 }else{
                     cCode="0";
