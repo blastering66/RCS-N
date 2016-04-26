@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/tv_kategori"
-            android:textSize="@dimen/medium"
+            android:textSize="@dimen/small"
             android:textColor="@color/color_text_dark"
             android:maxLines="2"
             android:layout_width="match_parent"
@@ -37,7 +37,7 @@
 
         <TextView
             android:id="@+id/tv_judul"
-            android:textSize="@dimen/medium"
+            android:textSize="@dimen/small"
             android:textColor="@color/color_text_dark"
             android:maxLines="2"
             android:layout_width="match_parent"

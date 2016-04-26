@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import id.tech.rcslive.activity.DetailEvent;
+import id.tech.rcslive.activity.DetailEvent_Joined;
 import id.tech.rcslive.activity.R;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
 import id.tech.rcslive.models.Rowdata_EventJoined;
@@ -56,7 +57,8 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailEvent.class);
+                Intent intent = new Intent(context, DetailEvent_Joined.class);
+                intent.putExtra("id_event", item.getIdEvent());
                 intent.putExtra("url_photo_event", item.getEventPhoto());
                 intent.putExtra("judul_event", item.getTvJudul());
                 intent.putExtra("alamat_event", item.getTvAlamat());

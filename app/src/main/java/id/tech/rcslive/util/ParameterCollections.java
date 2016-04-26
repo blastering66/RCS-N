@@ -1,5 +1,9 @@
 package id.tech.rcslive.util;
 
+import java.util.List;
+
+import id.tech.rcslive.models.RowDataGallery;
+
 /**
  * Created by RebelCreative-A1 on 21/03/2016.
  */
@@ -8,6 +12,8 @@ public class ParameterCollections {
     public static String BASE_URL=  "http://rcs-indonesia.com/nokia/api/";
     public static String BASE_URL_IMG=  "http://rcs-indonesia.com/nokia/uploads/cache/";
     public static String BASE_URL_GMAP=  "http://maps.google.com/maps/api/directions/";
+
+    public static List<RowDataGallery> data_selected;
 
     public static String SPF_NAME = "LiveLifeID";
     public static String SPF_LOGGED = "rcs_life_islogged";
@@ -23,6 +29,7 @@ public class ParameterCollections {
     public static String KIND_DOKUMENTASI = "documentationbyid_documentation";
     public static String KIND_COMMENTS_EVENT = "commentsbyid_event";
     public static String KIND_COMMENTS_INSERT = "comments";
+    public static String KIND_DOCUMENTATION_INSERT = "documentation";
     public static String KIND_JOIN = "join_post";
 
     public static String TAG_EMAIL = "email";

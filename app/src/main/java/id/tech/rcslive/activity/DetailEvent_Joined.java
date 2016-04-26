@@ -7,11 +7,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
-import com.google.gson.Gson;
 import com.pkmmte.view.CircularImageView;
 
 import java.io.IOException;
@@ -53,7 +49,7 @@ import retrofit.Retrofit;
 /**
  * Created by macbook on 4/1/16.
  */
-public class DetailEvent extends AppCompatActivity {
+public class DetailEvent_Joined extends AppCompatActivity {
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     SharedPreferences spf;
     @Bind(R.id.tv_alamat)
@@ -167,7 +163,7 @@ public class DetailEvent extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_detail_joined);
         activity = this;
         ButterKnife.bind(this);
         spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
@@ -618,7 +614,7 @@ public class DetailEvent extends AppCompatActivity {
                     img_00 = (ImageView) view_Comment_00.findViewById(R.id.img_commentor);
                     TextView tv_commentor_00 = (TextView) view_Comment_00.findViewById(R.id.tv_commentor);
                     TextView tv_comment_00 = (TextView) view_Comment_00.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent.this).load(cPhotoCommentor00).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_00);
+                    Glide.with(DetailEvent_Joined.this).load(cPhotoCommentor00).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_00);
                     tv_commentor_00.setText(cCommentor00);
                     tv_comment_00.setText(cComment00);
                     frame_comment_top.addView(view_Comment_00);
@@ -630,7 +626,7 @@ public class DetailEvent extends AppCompatActivity {
                     img_01 = (ImageView) view_Comment_01.findViewById(R.id.img_commentor);
                     TextView tv_commentor_01 = (TextView) view_Comment_01.findViewById(R.id.tv_commentor);
                     TextView tv_comment_01 = (TextView) view_Comment_01.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent.this).load(cPhotoCommentor01).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_01);
+                    Glide.with(DetailEvent_Joined.this).load(cPhotoCommentor01).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_01);
                     tv_commentor_01.setText(cCommentor01);
                     tv_comment_01.setText(cComment01);
                     frame_comment_top_2.addView(view_Comment_01);

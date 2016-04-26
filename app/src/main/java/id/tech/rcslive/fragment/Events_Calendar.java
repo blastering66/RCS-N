@@ -31,6 +31,7 @@ import id.tech.rcslive.adapters.CustomAdapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Calendar;
 import id.tech.rcslive.adapters.RV_Adapter_Joined;
 import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.models.Pojo_EventCalendar;
 import id.tech.rcslive.models.Pojo_EventHighlight;
 import id.tech.rcslive.models.Rowdata_EventCalendar;
 import id.tech.rcslive.models.Rowdata_EventJoined;
@@ -40,6 +41,7 @@ import retrofit.Call;
 import retrofit.Response;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,11 +98,11 @@ public class Events_Calendar extends Fragment{
         protected Void doInBackground(Void... params) {
             Rest_Adapter adapter= PublicFunctions.initRetrofit();
 
-            Call<Pojo_EventHighlight> call = adapter.get_all_events_calendar(ParameterCollections.KIND_EVENT,
+            Call<Pojo_EventCalendar> call = adapter.get_all_events_calendar(ParameterCollections.KIND_EVENT,
                     "ON");
 
             try{
-                Response<Pojo_EventHighlight> response = call.execute();
+                Response<Pojo_EventCalendar> response = call.execute();
                 Thread.sleep(1000);
                 if(response.isSuccess()){
                     if(response.body().getJsonCode().equals("1")){
@@ -115,16 +117,41 @@ public class Events_Calendar extends Fragment{
                             item.setEventPhoto(response.body().getData().get(i).getEventPhoto());
 
                             //blum ada Joined
-                            item.setJoined(response.body().getData().get(i).getEventMinjoin());
+                            item.setTotalJoin(response.body().getData().get(i).getTotalJoin());
                             item.setEventMinjoin(response.body().getData().get(i).getEventMinjoin());
-
+                            item.setEventDocumentationid(response.body().getData().get(i).getEventDocumentationid());
+                            item.setMemberName(response.body().getData().get(i).getMemberName());
                             item.setMemberPhone(response.body().getData().get(i).getMemberPhone());
                             item.setMemberPhoto(response.body().getData().get(i).getMemberPhoto());
 
                             String tgl_spf = spf.getString(ParameterCollections.SPF_SAME_DATE, "");
 
-                            if(tgl_spf.equals("") || !tgl_spf.equals(response.body().getData().get(i).getDeadline())){
+                            Calendar c_spf = Calendar.getInstance();
+                            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                            try{
+                                Date date_Event = df.parse(tgl_spf);
+                                c_spf.setTime(date_Event);
+                            }catch(ParseException e){
+
+                            }
+
+                            Calendar c_event = Calendar.getInstance();
+                            SimpleDateFormat df_event = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+                            try{
+                                Date date_Event = df_event.parse(response.body().getData().get(i).getDeadline());
+                                c_event.setTime(date_Event);
+                            }catch(ParseException e){
+
+                            }
+
+                            boolean isSameDay = c_spf.get(Calendar.YEAR) == c_event.get(Calendar.YEAR) &&
+                                    c_spf.get(Calendar.DAY_OF_YEAR) == c_event.get(Calendar.DAY_OF_YEAR);
+
+
+//                            if(tgl_spf.equals("") || !tgl_spf.equals(response.body().getData().get(i).getDeadline())){
+                            if(!isSameDay){
                                 item.setTypeView(0);
+
                             }else{
                                 item.setTypeView(1);
                             }

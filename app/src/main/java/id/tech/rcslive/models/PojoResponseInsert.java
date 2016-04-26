@@ -4,6 +4,8 @@ package id.tech.rcslive.models;
  * Created by macbook on 4/15/16.
  */
 
+import android.support.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

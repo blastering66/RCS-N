@@ -142,10 +142,17 @@ public class DetailEvent_UserJoined extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                setResult(RESULT_CANCELED);
                 finish();
                 break;
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }

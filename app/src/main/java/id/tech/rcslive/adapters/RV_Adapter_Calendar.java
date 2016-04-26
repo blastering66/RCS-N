@@ -61,6 +61,7 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DetailEvent.class);
+                        intent.putExtra("id_event", item.getIdEvent());
                         intent.putExtra("url_photo_event", item.getEventPhoto());
                         intent.putExtra("judul_event", item.getTvJudul());
                         intent.putExtra("alamat_event", item.getTvAlamat());
@@ -69,6 +70,9 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
                         intent.putExtra("lon_event", item.getEventLon());
                         intent.putExtra("desc_event", item.getEventDescription());
                         intent.putExtra("event_documentationid", item.getEventDocumentationid());
+                        intent.putExtra("member_name", item.getMemberName());
+                        intent.putExtra("member_phone", item.getMemberPhone());
+                        intent.putExtra("member_photo", item.getMemberPhoto());
                         context.startActivity(intent);
                     }
                 });
@@ -90,11 +94,12 @@ public class RV_Adapter_Calendar extends RecyclerView.Adapter<RecyclerView.ViewH
                 holderNow.tv_jam.setText(hour_Event_content );
                 holderNow.tv_judul.setText(item.getTvJudul());
                 holderNow.tv_kategori.setText(item.getTvKategori());
-                holderNow.tv_joined.setText(item.getJoined() + " / Min. " + item.getEventMinjoin() + " People");
+                holderNow.tv_joined.setText(item.getTotalJoin() + " / Min. " + item.getEventMinjoin() + " People");
                 holderNow.wrapper.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DetailEvent.class);
+                        intent.putExtra("id_event", item.getIdEvent());
                         intent.putExtra("url_photo_event", item.getEventPhoto());
                         intent.putExtra("judul_event", item.getTvJudul());
                         intent.putExtra("alamat_event", item.getTvAlamat());

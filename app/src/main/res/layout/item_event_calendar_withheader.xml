@@ -11,7 +11,6 @@
     <TextView
         android:id="@+id/tv_tgl"
         android:textSize="@dimen/medium"
-        android:textStyle="bold"
         android:layout_marginBottom="20dp"
         android:textColor="@color/color_text_dark"
         android:background="@color/color_text_light"
@@ -50,7 +49,7 @@
 
             <TextView
                 android:id="@+id/tv_kategori"
-                android:textSize="@dimen/medium"
+                android:textSize="@dimen/small"
                 android:textColor="@color/color_text_dark"
                 android:maxLines="2"
                 android:layout_width="match_parent"
@@ -58,7 +57,7 @@
 
             <TextView
                 android:id="@+id/tv_judul"
-                android:textSize="@dimen/medium"
+                android:textSize="@dimen/small"
                 android:textColor="@color/color_text_dark"
                 android:maxLines="2"
                 android:layout_width="match_parent"

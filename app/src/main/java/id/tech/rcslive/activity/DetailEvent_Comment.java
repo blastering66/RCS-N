@@ -145,6 +145,7 @@ public class DetailEvent_Comment  extends AppCompatActivity {
             pDialog.dismiss();
             new AsyncTask_LoadComments().execute();
             if(isSukses){
+                ed_Text.setText("");
                 new AsyncTask_LoadComments().execute();
             }else{
                 Toast.makeText(getApplicationContext(), "Failed to Comment", Toast.LENGTH_LONG).show();
@@ -246,10 +247,17 @@ public class DetailEvent_Comment  extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                setResult(RESULT_CANCELED);
                 finish();
                 break;
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }

@@ -57,6 +57,17 @@ public class Rowdata_EventJoined {
     @SerializedName("member_name")
     @Expose
     private String memberName;
+    @SerializedName("total_join")
+    @Expose
+    private String totalJoin;
+
+    public String getTotalJoin() {
+        return totalJoin;
+    }
+
+    public void setTotalJoin(String totalJoin) {
+        this.totalJoin = totalJoin;
+    }
 
     public String getMemberName() {
         return memberName;

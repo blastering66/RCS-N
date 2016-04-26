@@ -78,11 +78,11 @@ public class Events_Joined extends Fragment{
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
 
             SharedPreferences spf = getActivity().getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
-            Call<Pojo_EventHighlight> call = adapter.get_all_events_joined(ParameterCollections.KIND_EVENT_JOINED,
+            Call<Pojo_EventJoined> call = adapter.get_all_events_joined(ParameterCollections.KIND_EVENT_JOINED,
                     spf.getString(ParameterCollections.SPF_USER_ID, ""));
 
             try{
-                Response<Pojo_EventHighlight> response_event = call.execute();
+                Response<Pojo_EventJoined> response_event = call.execute();
                 Thread.sleep(1000);
                 if(response_event.isSuccess()){
                     if(response_event.body().getJsonCode().equals("1")){
@@ -95,8 +95,10 @@ public class Events_Joined extends Fragment{
                                 item.setTvAlamat(response_event.body().getData().get(i).getEventLocation());
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());
                                 item.setEventPhoto(response_event.body().getData().get(i).getEventPhoto());
-                                item.setJoined("10 Joined");
+                                item.setTotalJoin(response_event.body().getData().get(i).getTotalJoin());
+                                item.setEventDocumentationid(response_event.body().getData().get(i).getEventDocumentationid());
                                 item.setEventMinjoin(response_event.body().getData().get(i).getEventMinjoin());
+                                item.setMemberName(response_event.body().getData().get(i).getMemberName());
                                 item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
                                 item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
                                 data.add(item);

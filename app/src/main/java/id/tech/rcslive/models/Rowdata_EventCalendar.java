@@ -47,6 +47,17 @@ public class Rowdata_EventCalendar {
     @SerializedName("event_minjoin")
     @Expose
     private String eventMinjoin;
+    @SerializedName("total_join")
+    @Expose
+    private String totalJoin;
+
+    public String getTotalJoin() {
+        return totalJoin;
+    }
+
+    public void setTotalJoin(String totalJoin) {
+        this.totalJoin = totalJoin;
+    }
     @SerializedName("member_phone")
     @Expose
     private String memberPhone;

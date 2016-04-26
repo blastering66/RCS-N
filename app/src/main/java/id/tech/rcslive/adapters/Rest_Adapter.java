@@ -9,7 +9,9 @@ import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
+import id.tech.rcslive.models.Pojo_EventCalendar;
 import id.tech.rcslive.models.Pojo_EventHighlight;
+import id.tech.rcslive.models.Pojo_EventJoined;
 import id.tech.rcslive.models.Pojo_EventUserJoined;
 import id.tech.rcslive.models.Pojo_ResponseLogin;
 import id.tech.rcslive.models.RowData_Dokumentasi;
@@ -51,7 +53,7 @@ public interface Rest_Adapter {
     );
 
     @GET("getApi.php?")
-    Call<Pojo_EventHighlight> get_all_events_calendar(
+    Call<Pojo_EventCalendar> get_all_events_calendar(
             @Query("kind") String kind,
             @Query("calendar_mode") String calendar_mode
     );
@@ -64,7 +66,7 @@ public interface Rest_Adapter {
     );
 
     @GET("getApi.php?")
-    Call<Pojo_EventHighlight> get_all_events_joined(
+    Call<Pojo_EventJoined> get_all_events_joined(
             @Query("kind") String kind,
             @Query("id") String id
     );
@@ -144,8 +146,7 @@ public interface Rest_Adapter {
     @POST("insert.php?")
     Call<PojoResponseInsert> insert_event_dokumentasi(
             @Query("kind") String kind,
-            @Field("eventid") String eventid,
-            @Field("userid") String userid,
-            @Part("") RequestBody photo
+            @Part("docid") RequestBody docid,
+            @Part("docphoto\"; filename=\"img0.png\" ") RequestBody docphoto
     );
 }
