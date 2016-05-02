@@ -204,7 +204,6 @@ public class DetailEvent extends AppCompatActivity {
         id_event = getIntent().getStringExtra("id_event");
         event_documentationid = getIntent().getStringExtra("event_documentationid");
 
-        Log.e("id_event detail", id_event);
 
         Target target = new SimpleTarget<Bitmap>(){
             @Override

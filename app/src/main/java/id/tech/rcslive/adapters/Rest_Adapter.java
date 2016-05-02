@@ -5,6 +5,8 @@ package id.tech.rcslive.adapters;
  */
 import com.squareup.okhttp.RequestBody;
 
+import id.tech.rcslive.models.PojoCategories;
+import id.tech.rcslive.models.PojoCity;
 import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
@@ -43,6 +45,14 @@ public interface Rest_Adapter {
             @Query("kind") String kind
     );
 
+    @GET("getApi.php?kind=city")
+    Call<PojoCity> get_all_city(
+    );
+
+    @GET("getApi.php?kind=categories")
+    Call<PojoCategories> get_all_categories(
+    );
+
     @GET("json?")
     Call<PojoResponseGmap> calculate_distance(
             @Query("origin") String latlongi_origin,
@@ -63,6 +73,12 @@ public interface Rest_Adapter {
             @Query("kind") String kind,
             @Query("display_region") boolean display_region,
             @Query("limit") String limit
+    );
+
+    @GET("getApi.php?kind=event&filter_mode=1&eventtype=Irregular")
+    Call<Pojo_EventHighlight> get_result_events(
+            @Query("regionid") String regionid,
+            @Query("categoryid") String categoryid
     );
 
     @GET("getApi.php?")

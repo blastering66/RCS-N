@@ -26,6 +26,7 @@
         <activity android:name=".LoginForm"/>
         <activity android:name=".MenuUtama"/>
 
+        <activity android:name=".SearchByCitynCategories" />
         <activity android:name=".SearchEvent" >
             <meta-data
                 android:name="android.app.default_searchable"

@@ -53,9 +53,9 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     TextView tv_Nama;
     SharedPreferences spf;
     @Bind(R.id.btn_region_filter)
-    Button btn_FilterRegions;
+    ImageView btn_FilterRegions;
     @OnClick(R.id.btn_region_filter) void clickFilterPage(){
-        startActivity(new Intent(getApplicationContext(), SearchEvent.class));
+        startActivity(new Intent(getApplicationContext(), SearchByCitynCategories.class));
     }
 
     @Override
@@ -65,7 +65,6 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         ButterKnife.bind(this);
         ActionBar ac = getSupportActionBar();
         ac.hide();
-
 
         spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
 

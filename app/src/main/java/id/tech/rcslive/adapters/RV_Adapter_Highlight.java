@@ -58,6 +58,7 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailEvent.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("url_photo_event", item.getEventPhoto());
                 intent.putExtra("judul_event", item.getTvJudul());
                 intent.putExtra("alamat_event", item.getTvAlamat());

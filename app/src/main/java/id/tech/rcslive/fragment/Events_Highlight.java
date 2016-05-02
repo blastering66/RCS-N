@@ -38,6 +38,8 @@ public class Events_Highlight extends Fragment {
     RecyclerView.Adapter adapter;
     ImageView btn_refresh;
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
