@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import id.tech.rcslive.adapters.RV_Adapter_Highlight;
 import id.tech.rcslive.adapters.RV_Adapter_SearchCategories;
 import id.tech.rcslive.adapters.RV_Adapter_SearchCity;
+import id.tech.rcslive.adapters.RV_Adapter_TypeEvent;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.models.PojoCategories;
 import id.tech.rcslive.models.PojoCity;
@@ -43,13 +44,13 @@ import retrofit.Response;
  * Created by macbook on 4/5/16.
  */
 public class SearchByCitynCategories extends AppCompatActivity implements RV_Adapter_SearchCity.onSelectedRegionListener,
-RV_Adapter_SearchCategories.OnSelectedCategoriesListener{
+RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.onSelectedTypeEventListener{
     @Bind(R.id.rv)RecyclerView rv;
     @Bind(R.id.btn_refresh)ImageView btn_refresh;
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter, adapter_result;
     Activity activity;
-    String selected_region, selected_categories;
+    String selected_region, selected_categories, selected_type_event;
 
     @OnClick(R.id.btn_refresh) void onRefresh(){
         new ASyncTask_GetAllCity().execute();
@@ -58,6 +59,12 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener{
     @Override
     public void selectedRegion(String id) {
         selected_region = id;
+        new ASyncTask_GetTypeEvent().execute();
+    }
+
+    @Override
+    public void selectedType(String id) {
+        selected_type_event = id;
         new ASyncTask_GetAllCategories().execute();
     }
 
@@ -72,7 +79,7 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_rv);
         ButterKnife.bind(this);
-activity = this;
+        activity = this;
         ActionBar ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Search Event ");
@@ -152,6 +159,57 @@ activity = this;
                 btn_refresh.setImageResource(R.drawable.img_transparent);
 
                 adapter = new RV_Adapter_SearchCity(activity, getApplicationContext(), data);
+                rv.setLayoutManager(layoutManager);
+                rv.setAdapter(adapter);
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Data", Toast.LENGTH_LONG).show();
+                rv.setVisibility(View.GONE);
+                btn_refresh.setVisibility(View.VISIBLE);
+                animation.cancel();
+            }
+        }
+
+    }
+
+    private class ASyncTask_GetTypeEvent extends AsyncTask<Void,Void,Void> {
+        String cCode = "0";
+        Animation animation;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            layoutManager = new GridLayoutManager(getApplicationContext(), 1);
+
+            animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+            animation.setRepeatMode(Animation.INFINITE);
+
+            rv.setVisibility(View.GONE);
+            btn_refresh.setVisibility(View.VISIBLE);
+            btn_refresh.setAnimation(animation);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                Thread.sleep(1000);
+                cCode="1";
+            } catch (Exception e) {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (cCode.equals("1")) {
+                rv.setVisibility(View.VISIBLE);
+                btn_refresh.setVisibility(View.GONE);
+                btn_refresh.setImageResource(R.drawable.img_transparent);
+
+                adapter = new RV_Adapter_TypeEvent(activity, getApplicationContext());
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
 

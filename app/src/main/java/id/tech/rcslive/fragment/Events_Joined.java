@@ -130,7 +130,7 @@ public class Events_Joined extends Fragment{
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
-                Toast.makeText(getActivity(), "No Data", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "No Event Joined Yet", Toast.LENGTH_LONG).show();
                 rv.setVisibility(View.GONE);
                 btn_refresh.setVisibility(View.VISIBLE);
                 animation.cancel();
