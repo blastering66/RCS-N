@@ -7,6 +7,7 @@ import com.squareup.okhttp.RequestBody;
 
 import id.tech.rcslive.models.PojoCategories;
 import id.tech.rcslive.models.PojoCity;
+import id.tech.rcslive.models.PojoCountry;
 import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
@@ -44,6 +45,9 @@ public interface Rest_Adapter {
     Call<Pojo_EventHighlight> get_all_events(
             @Query("kind") String kind
     );
+
+    @GET("getApi.php?kind=country")
+    Call<PojoCountry> get_all_country();
 
     @GET("getApi.php?kind=city")
     Call<PojoCity> get_all_city(

@@ -24,6 +24,8 @@
 
         <activity android:name=".Login"/>
         <activity android:name=".LoginForm"/>
+        <activity android:name=".RegisterForm"/>
+        <activity android:name=".RegisterForm_ProfilePicture"/>
         <activity android:name=".MenuUtama"/>
 
         <activity android:name=".SearchByCitynCategories" />

@@ -96,12 +96,14 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
 
         @Override
         protected Void doInBackground(Void... params) {
-             url= spf.getString(ParameterCollections.SPF_USER_PHOTO_URL, "");
+            //Sementara
+//             url= spf.getString(ParameterCollections.SPF_USER_PHOTO_URL, "");
+            url = "http://www.lcfc.com/images/common/bg_player_profile_default_big.png";
              username= spf.getString(ParameterCollections.SPF_USER_NAME, "unknown");
             if(url.contains("jpg")){
                 try{
                     bitmap_Profile = Glide.with(getApplicationContext()).
-                            load(spf.getString(ParameterCollections.SPF_USER_PHOTO_URL, "unknown")).asBitmap().into(100,100).get();
+                            load(url).asBitmap().into(100,100).get();
 
                 }catch (ExecutionException e){
 
@@ -117,7 +119,8 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            img_Profile.setImageBitmap(bitmap_Profile);
+            //Sementara
+//            img_Profile.setImageBitmap(bitmap_Profile);
             tv_Nama.setText(username);
         }
     }

@@ -34,6 +34,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,11 +63,21 @@ public class LoginForm  extends AppCompatActivity {
     private AccessToken accessToken;
     private LoginResult json_result;
     @Bind(R.id.btn_fb_connect) View btn_Fb;
+    @Bind(R.id.btn_fb_connect_login) View btn_Fb_Login;
     private String user_id, user_email, user_fullname, user_foto, user_gender;
     @Bind(R.id.ed_username)
     EditText ed_Username;
     @Bind(R.id.ed_password) EditText ed_Password;
+    @Bind(R.id.btn_register)
+    Button btn_register;
+    @OnClick(R.id.btn_register) void onCLickRegister(){
+        Intent intent = new Intent(getApplicationContext(), RegisterForm.class);
+        intent.putExtra("register_fb", false);
+        startActivity(intent);
+        finish();
+    }
     SharedPreferences spf;
+    private boolean bool_fb_login = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +95,15 @@ public class LoginForm  extends AppCompatActivity {
         btn_Fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bool_fb_login = false;
+                LoginManager.getInstance().logInWithReadPermissions(LoginForm.this, Arrays.asList("public_profile", "email"));
+            }
+        });
+
+        btn_Fb_Login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bool_fb_login = true;
                 LoginManager.getInstance().logInWithReadPermissions(LoginForm.this, Arrays.asList("public_profile", "email"));
             }
         });
@@ -129,7 +149,22 @@ public class LoginForm  extends AppCompatActivity {
                                 }
 
                                 spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL,"").commit();
-                                Log.e("fb response = ", user_fullname + " , "+ user_email +", "+ user_foto);
+                                Log.e("fb response = ", user_fullname + " , " + user_email + ", " + user_foto);
+
+                                if(bool_fb_login){
+                                    // API cek ke DB apa sdh terdaftar email by facebooknya
+
+
+                                }else{
+                                    Intent intent = new Intent(getApplicationContext(), RegisterForm.class);
+                                    intent.putExtra("register_fb", true);
+                                    intent.putExtra("name", user_fullname);
+                                    intent.putExtra("email", user_email);
+                                    intent.putExtra("url_foto", user_foto);
+                                    startActivity(intent);
+                                    finish();
+                                }
+
                             }
                         });
 
@@ -204,7 +239,15 @@ public class LoginForm  extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), "Please Fill Username & Password", Toast.LENGTH_LONG).show();
                 }else{
-                    new ASyncTask_Login().execute();
+
+                    //Sementara
+                    spf.edit().putString(ParameterCollections.SPF_USER_ID, "1").commit();
+                    spf.edit().putString(ParameterCollections.SPF_USER_NAME, "Ridho Maulana").commit();
+                    spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, "http://www.lcfc.com/images/common/bg_player_profile_default_big.png").commit();
+                    spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+                    startActivity(new Intent(getApplicationContext(), MenuUtama.class));
+                    finish();
+//                    new ASyncTask_Login().execute();
                 }
 
                 break;

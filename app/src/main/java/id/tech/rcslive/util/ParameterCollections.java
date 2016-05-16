@@ -9,7 +9,8 @@ import id.tech.rcslive.models.RowDataGallery;
  */
 public class ParameterCollections {
 
-    public static String BASE_URL=  "http://rcs-indonesia.com/nokia/api/";
+//    public static String BASE_URL=  "http://rcs-indonesia.com/nokia/api/";
+public static String BASE_URL=  "http://livelifeid.com/api/";
     public static String BASE_URL_IMG=  "http://rcs-indonesia.com/nokia/uploads/cache/";
     public static String BASE_URL_GMAP=  "http://maps.google.com/maps/api/directions/";
 

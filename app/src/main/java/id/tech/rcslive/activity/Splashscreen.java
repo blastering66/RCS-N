@@ -57,6 +57,7 @@ public class Splashscreen extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MenuUtama.class));
                 finish();
             }else{
+                showHashKey();
                 startActivity(new Intent(getApplicationContext(), Login.class));
                 finish();
             }
@@ -68,7 +69,7 @@ public class Splashscreen extends AppCompatActivity {
         // Add code to print out the key hash
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
-                    "ui.tech.sahabatmakara.activity",
+                    "id.tech.rcslive.activity",
                     PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
