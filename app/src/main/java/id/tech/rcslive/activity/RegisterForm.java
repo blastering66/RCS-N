@@ -21,7 +21,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import id.tech.rcslive.adapters.Rest_Adapter;
+import id.tech.rcslive.models.PojoCity;
 import id.tech.rcslive.models.PojoCountry;
+import id.tech.rcslive.models.Rowdata_City;
 import id.tech.rcslive.models.Rowdata_Country;
 import id.tech.rcslive.util.ParameterCollections;
 import id.tech.rcslive.util.PublicFunctions;
@@ -66,6 +68,7 @@ public class RegisterForm extends AppCompatActivity {
         }
 
         new Async_CountryData().execute();
+        new Async_CityData().execute();
 //        Log.e("Name = ", nama);
     }
 
@@ -175,6 +178,7 @@ public class RegisterForm extends AppCompatActivity {
                 spinner_country.setAdapter(adapter);
 
             }else{
+                Toast.makeText(getApplicationContext(), "Can not Load Data", Toast.LENGTH_LONG).show();
 
             }
         }
@@ -182,18 +186,59 @@ public class RegisterForm extends AppCompatActivity {
 
     private class Async_CityData extends AsyncTask<Void,Void,Void>{
 
+        List<Rowdata_City> data_country;
+        boolean isSukses= false;
+
         @Override
         protected void onPreExecute() {
         }
 
         @Override
         protected Void doInBackground(Void... params) {
+            Rest_Adapter retrofit = PublicFunctions.initRetrofit();
+
+            Call<PojoCity> call = retrofit.get_all_city();
+            try{
+                Response<PojoCity> response = call.execute();
+                if(response.isSuccess()){
+                    if(response.body() != null){
+                        if(response.body().getData().size() > 0){
+                            data_country = new ArrayList<>();
+                            for(int i=0; i < response.body().getData().size(); i++){
+                                Rowdata_City item = new Rowdata_City();
+                                item.setId(response.body().getData().get(i).getId());
+                                item.setCityName(response.body().getData().get(i).getCityName());
+                                data_country.add(item);
+                                isSukses = true;
+                            }
+                        }
+                    }
+                }else{
+                    Log.e("Error", "no tuskses");
+                }
+            }catch (IOException e){
+
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            if(isSukses){
+                List<String> array_city = new ArrayList<>();
+                for(int i=0; i < data_country.size(); i ++){
+                    array_city.add(data_country.get(i).getCityName());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+                        R.layout.spinner_item, array_city);
+                adapter.setDropDownViewResource(R.layout.spinner_item);
+                spinner_city.setAdapter(adapter);
+
+            }else{
+                Toast.makeText(getApplicationContext(), "Can not Load Data", Toast.LENGTH_LONG).show();
+
+            }
         }
     }
 }
