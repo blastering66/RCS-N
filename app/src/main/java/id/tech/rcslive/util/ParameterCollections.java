@@ -14,6 +14,8 @@ public static String BASE_URL=  "http://livelifeid.com/api/";
     public static String BASE_URL_IMG=  "http://rcs-indonesia.com/nokia/uploads/cache/";
     public static String BASE_URL_GMAP=  "http://maps.google.com/maps/api/directions/";
 
+    public static String URL_SD_IMAGES =  "/LivelifeId/images/";
+
     public static List<RowDataGallery> data_selected;
 
     public static String SPF_NAME = "LiveLifeID";

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -47,6 +49,7 @@ public class RegisterForm extends AppCompatActivity {
 
     String url_foto;
     String _ed_username, _ed_email, _ed_phone, _ed_password,_ed_password_retype;
+    String mCountrySelected,mCitySelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +65,12 @@ public class RegisterForm extends AppCompatActivity {
 
         boolean from_fb = getIntent().getBooleanExtra("register_fb", false);
         if(from_fb){
-            ed_username.setText(getIntent().getStringExtra("name"));
-            ed_email.setText(getIntent().getStringExtra("email"));
+            _ed_username = getIntent().getStringExtra("name");
+            _ed_email = getIntent().getStringExtra("email");
             url_foto = getIntent().getStringExtra("url_foto");
+
+            ed_username.setText(_ed_username);
+            ed_email.setText(_ed_email);
         }
 
         new Async_CountryData().execute();
@@ -104,8 +110,8 @@ public class RegisterForm extends AppCompatActivity {
                         intent.putExtra("_ed_email", _ed_email);
                         intent.putExtra("_ed_phone", _ed_phone);
                         intent.putExtra("_ed_password", _ed_password);
-                        intent.putExtra("_country", "");
-                        intent.putExtra("_city", "");
+                        intent.putExtra("_country", mCountrySelected);
+                        intent.putExtra("_city", mCitySelected);
                         startActivity(intent);
                         finish();
                     }
@@ -176,6 +182,17 @@ public class RegisterForm extends AppCompatActivity {
                         R.layout.spinner_item, array_country);
                 adapter.setDropDownViewResource(R.layout.spinner_item);
                 spinner_country.setAdapter(adapter);
+                spinner_country.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mCountrySelected = data_country.get(position).getId();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        mCountrySelected = data_country.get(0).getId();
+                    }
+                });
 
             }else{
                 Toast.makeText(getApplicationContext(), "Can not Load Data", Toast.LENGTH_LONG).show();
@@ -234,6 +251,17 @@ public class RegisterForm extends AppCompatActivity {
                         R.layout.spinner_item, array_city);
                 adapter.setDropDownViewResource(R.layout.spinner_item);
                 spinner_city.setAdapter(adapter);
+                spinner_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mCitySelected = data_country.get(position).getId();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        mCitySelected = data_country.get(0).getId();
+                    }
+                });
 
             }else{
                 Toast.makeText(getApplicationContext(), "Can not Load Data", Toast.LENGTH_LONG).show();

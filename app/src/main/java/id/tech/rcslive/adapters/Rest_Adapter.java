@@ -169,4 +169,16 @@ public interface Rest_Adapter {
             @Part("docid") RequestBody docid,
             @Part("docphoto\"; filename=\"img0.png\" ") RequestBody docphoto
     );
+
+    @Multipart
+    @POST("insert.php?kind=register")
+    Call<PojoResponseInsert> register(
+            @Part("name") RequestBody name,
+            @Part("email") RequestBody email,
+            @Part("phone") RequestBody phone,
+            @Part("password") RequestBody password,
+            @Part("country") RequestBody country,
+            @Part("city") RequestBody city,
+            @Part("avatar\"; filename=\"img0.png\" ") RequestBody docphoto
+    );
 }

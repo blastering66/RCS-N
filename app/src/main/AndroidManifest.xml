@@ -27,6 +27,9 @@
         <activity android:name=".RegisterForm"/>
         <activity android:name=".RegisterForm_ProfilePicture"/>
         <activity android:name=".MenuUtama"/>
+        <activity android:name="id.tech.rcslive.dialogs.DialogUploadImage"
+            android:theme="@style/MyActivityDialogTheme"
+            />
 
         <activity android:name=".SearchByCitynCategories" />
         <activity android:name=".SearchEvent" >
