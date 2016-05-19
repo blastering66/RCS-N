@@ -11,7 +11,8 @@ public class ParameterCollections {
 
 //    public static String BASE_URL=  "http://rcs-indonesia.com/nokia/api/";
 public static String BASE_URL=  "http://livelifeid.com/api/";
-    public static String BASE_URL_IMG=  "http://rcs-indonesia.com/nokia/uploads/cache/";
+    public static String BASE_URL_IMG=  "http://livelifeid.com/uploads/source/";
+    public static String BASE_URL_IMG_THUMB=  "http://livelifeid.com/uploads/thumbnail/";
     public static String BASE_URL_GMAP=  "http://maps.google.com/maps/api/directions/";
 
     public static String URL_SD_IMAGES =  "/LivelifeId/images/";

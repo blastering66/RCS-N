@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 import com.pkmmte.view.CircularImageView;
 
 import java.io.IOException;
@@ -56,6 +57,19 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     ImageView btn_FilterRegions;
     @OnClick(R.id.btn_region_filter) void clickFilterPage(){
         startActivity(new Intent(getApplicationContext(), SearchByCitynCategories.class));
+    }
+    @OnClick(R.id.img_profile) void clickProfile(){
+        Intent intent = new Intent(getApplicationContext(), AccountDetail.class);
+//        ActivityTransitionLauncher.with(MenuUtama.this).from(img_Profile).launch(intent);
+        startActivityForResult(intent , 2);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 2 && resultCode == RESULT_OK){
+            finish();
+        }
     }
 
     @Override
@@ -93,18 +107,20 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     private class AsyncTask_LoadProfile extends AsyncTask<Void,Void,Void>{
         Bitmap bitmap_Profile;
         String url,username;
+        boolean isSukses = false;
 
         @Override
         protected Void doInBackground(Void... params) {
             //Sementara
-//             url= spf.getString(ParameterCollections.SPF_USER_PHOTO_URL, "");
-            url = "http://www.lcfc.com/images/common/bg_player_profile_default_big.png";
+             url= spf.getString(ParameterCollections.SPF_USER_PHOTO_URL, "");
+//            url = "http://www.lcfc.com/images/common/bg_player_profile_default_big.png";
              username= spf.getString(ParameterCollections.SPF_USER_NAME, "unknown");
-            if(url.contains("jpg")){
+            if(url.contains("jpg") || url.contains("png")){
                 try{
                     bitmap_Profile = Glide.with(getApplicationContext()).
                             load(url).asBitmap().into(100,100).get();
 
+                    isSukses = true;
                 }catch (ExecutionException e){
 
                 }catch (InterruptedException e){
@@ -120,8 +136,11 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             //Sementara
-//            img_Profile.setImageBitmap(bitmap_Profile);
-            tv_Nama.setText(username);
+            if(isSukses){
+                img_Profile.setImageBitmap(bitmap_Profile);
+                tv_Nama.setText(username);
+            }
+
         }
     }
 

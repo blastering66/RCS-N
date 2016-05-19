@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.squareup.okhttp.OkHttpClient;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.models.PojoResponseGmap;
@@ -23,6 +26,10 @@ import retrofit.Retrofit;
 public class PublicFunctions {
 
     public static Rest_Adapter initRetrofit(){
+        final OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setReadTimeout(270, TimeUnit.SECONDS);
+        okHttpClient.setConnectTimeout(270, TimeUnit.SECONDS);
+
         Retrofit retrofit = new Retrofit.Builder().baseUrl(ParameterCollections.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         Rest_Adapter adapter = retrofit.create(Rest_Adapter.class);

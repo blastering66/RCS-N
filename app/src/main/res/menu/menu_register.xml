@@ -4,6 +4,13 @@
     >
 
     <item
+        android:id="@+id/action_refresh"
+        android:title="Refresh"
+        android:icon="@drawable/img_reload"
+        android:menuCategory="system"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_register"
         android:title="Next"
         android:menuCategory="system"

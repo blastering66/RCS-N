@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -80,10 +81,10 @@ public class DialogUploadImage extends Activity {
 				// ******** code for crop image
 				intent.putExtra("crop", "true");
 				intent.putExtra("scale", "true");
-				intent.putExtra("aspectX", 3);
-				intent.putExtra("aspectY", 4);
-				intent.putExtra("outputX", 900);
-				intent.putExtra("outputY", 1200);
+				intent.putExtra("aspectX", 1);
+				intent.putExtra("aspectY", 1);
+				intent.putExtra("outputX", 200);
+				intent.putExtra("outputY", 200);
 
 				try {
 
@@ -131,8 +132,8 @@ public class DialogUploadImage extends Activity {
 //					new_photo = Bitmap.createScaledBitmap(photo,w, h, true);
 					mUrl_Img = SaveImage(photo);
 
-					Toast.makeText(getApplicationContext(),
-							"Saved to : " + mUrl_Img, Toast.LENGTH_LONG).show();
+//					Toast.makeText(getApplicationContext(),
+//							"Saved to : " + mUrl_Img, Toast.LENGTH_LONG).show();
 
 					Intent intent_result = new Intent();
 					intent_result.putExtra("mUrl_Img", mUrl_Img);
@@ -166,10 +167,13 @@ public class DialogUploadImage extends Activity {
 //					}
 //					new_photo = Bitmap.createScaledBitmap(photo, w, h, true);
 //					mUrl_Img = SaveImage(new_photo);
+					int dimension = getSquareCropDimensionForBitmap(photo);
+					photo = ThumbnailUtils.extractThumbnail(photo, dimension, dimension);
+
 					 mUrl_Img = SaveImage(photo);
 
-					Toast.makeText(getApplicationContext(),
-							"Saved to : " + mUrl_Img, Toast.LENGTH_LONG).show();
+//					Toast.makeText(getApplicationContext(),
+//							"Camera Image Saved to : " + mUrl_Img, Toast.LENGTH_LONG).show();
 
 					Intent intent_result = new Intent();
 					intent_result.putExtra("mUrl_Img", mUrl_Img);
@@ -206,8 +210,8 @@ public class DialogUploadImage extends Activity {
 				file.delete();
 			try {
 				FileOutputStream out = new FileOutputStream(file);
-//				finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-				finalBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);;
+				finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//				finalBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);;
 				out.flush();
 				out.close();
 
@@ -239,7 +243,7 @@ public class DialogUploadImage extends Activity {
 			try {
 				FileOutputStream out = new FileOutputStream(file);
 //				finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-				finalBitmap.compress(Bitmap.CompressFormat.PNG, 90, out);
+				finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 				out.flush();
 				out.close();
 
@@ -250,6 +254,12 @@ public class DialogUploadImage extends Activity {
 			return file.getAbsolutePath();
 		}
 
+	}
+
+	public int getSquareCropDimensionForBitmap(Bitmap bitmap)
+	{
+		//use the smallest dimension of the image to crop to
+		return Math.min(bitmap.getWidth(), bitmap.getHeight());
 	}
 
 }

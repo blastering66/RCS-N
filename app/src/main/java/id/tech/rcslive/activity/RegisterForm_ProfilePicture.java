@@ -28,6 +28,7 @@ import id.blastering99.htmlloader.CustomProgressDialog;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.dialogs.DialogUploadImage;
 import id.tech.rcslive.models.PojoResponseInsert;
+import id.tech.rcslive.models.Pojo_ResponseRegister;
 import id.tech.rcslive.util.ParameterCollections;
 import id.tech.rcslive.util.PublicFunctions;
 import retrofit.Call;
@@ -57,6 +58,7 @@ public class RegisterForm_ProfilePicture extends AppCompatActivity {
         boolean isSukses = false;
         String message = "";
         private CustomProgressDialog pDialog;
+        private String idUser, nameUser, urlPhotoUsr= "";
 
         @Override
         protected void onPreExecute() {
@@ -80,14 +82,24 @@ public class RegisterForm_ProfilePicture extends AppCompatActivity {
                 File file = new File(url_foto);
                 RequestBody body_img = RequestBody.create(MediaType.parse("image/*"), file);
 
-                Call<PojoResponseInsert> call = adapter.register(_ed_username_,
+                Call<Pojo_ResponseRegister> call = adapter.register(_ed_username_,
                         _ed_email_,_ed_phone_,_ed_password_,_country_, _city_ , body_img);
-                Response<PojoResponseInsert> response = call.execute();
+                Response<Pojo_ResponseRegister> response = call.execute();
 
                 if(response.isSuccess()){
                     if(response.body() != null){
                         if(response.body().getJsonCode().equals("1")){
                             isSukses = true;
+                            idUser = response.body().getId();
+                            nameUser= response.body().getMemberName();
+                            urlPhotoUsr =  response.body().getMemberPhoto();
+
+                            urlPhotoUsr = ParameterCollections.BASE_URL_IMG_THUMB + urlPhotoUsr;
+
+                            spf.edit().putString(ParameterCollections.SPF_USER_ID, idUser).commit();
+                            spf.edit().putString(ParameterCollections.SPF_USER_NAME, nameUser).commit();
+                            spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, urlPhotoUsr).commit();
+                            spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
                         }else{
                             message = response.body().getResponse();
                         }
@@ -113,10 +125,6 @@ public class RegisterForm_ProfilePicture extends AppCompatActivity {
             super.onPostExecute(aVoid);
             pDialog.dismiss();
             if(isSukses){
-                spf.edit().putString(ParameterCollections.SPF_USER_ID, "1").commit();
-                spf.edit().putString(ParameterCollections.SPF_USER_NAME, _ed_username).commit();
-                spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_foto).commit();
-                spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
 
                 Intent intent = new Intent(getApplicationContext(), MenuUtama.class);
                 startActivity(intent);

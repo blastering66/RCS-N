@@ -16,7 +16,9 @@ import id.tech.rcslive.models.Pojo_EventCalendar;
 import id.tech.rcslive.models.Pojo_EventHighlight;
 import id.tech.rcslive.models.Pojo_EventJoined;
 import id.tech.rcslive.models.Pojo_EventUserJoined;
+import id.tech.rcslive.models.Pojo_ResponseAccountUser;
 import id.tech.rcslive.models.Pojo_ResponseLogin;
+import id.tech.rcslive.models.Pojo_ResponseRegister;
 import id.tech.rcslive.models.RowData_Dokumentasi;
 import id.tech.rcslive.util.ParameterCollections;
 import retrofit.Call;
@@ -45,6 +47,7 @@ public interface Rest_Adapter {
     Call<Pojo_EventHighlight> get_all_events(
             @Query("kind") String kind
     );
+
 
     @GET("getApi.php?kind=country")
     Call<PojoCountry> get_all_country();
@@ -172,7 +175,7 @@ public interface Rest_Adapter {
 
     @Multipart
     @POST("insert.php?kind=register")
-    Call<PojoResponseInsert> register(
+    Call<Pojo_ResponseRegister> register(
             @Part("name") RequestBody name,
             @Part("email") RequestBody email,
             @Part("phone") RequestBody phone,
@@ -180,5 +183,10 @@ public interface Rest_Adapter {
             @Part("country") RequestBody country,
             @Part("city") RequestBody city,
             @Part("avatar\"; filename=\"img0.png\" ") RequestBody docphoto
+    );
+
+    @GET("getApi.php?kind=profile")
+    Call<Pojo_ResponseAccountUser> get_profile_user(
+            @Query("id") String id
     );
 }

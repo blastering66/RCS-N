@@ -91,6 +91,10 @@ public class RegisterForm extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.action_refresh:
+                new Async_CountryData().execute();
+                new Async_CityData().execute();
+                break;
 
             case R.id.action_register:
                 _ed_username = ed_username.getText().toString();
