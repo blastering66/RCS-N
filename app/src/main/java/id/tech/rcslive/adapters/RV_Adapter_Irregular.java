@@ -11,29 +11,30 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import id.tech.rcslive.activity.DetailEvent;
-import id.tech.rcslive.activity.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import id.tech.rcslive.activity.DetailEvent;
+import id.tech.rcslive.activity.R;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
+import id.tech.rcslive.models.Rowdata_EventIrregular;
 import id.tech.rcslive.util.ParameterCollections;
 
-public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highlight.ViewHolder>{
+public class RV_Adapter_Irregular extends RecyclerView.Adapter<RV_Adapter_Irregular.ViewHolder>{
     private Context context;
-    private List<Rowdata_EventHighlight> datum;
+    private List<Rowdata_EventIrregular> datum;
 
-    public RV_Adapter_Highlight(Context context, List<Rowdata_EventHighlight> datum) {
+    public RV_Adapter_Irregular(Context context, List<Rowdata_EventIrregular> datum) {
         this.context = context;
         this.datum = datum;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Rowdata_EventHighlight item = datum.get(position);
+        final Rowdata_EventIrregular item = datum.get(position);
 
 //        Calendar c = Calendar.getInstance();
 //        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm");
@@ -43,31 +44,32 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
 //        }catch(ParseException e){
 //
 //        }
-//
+
 //        SimpleDateFormat df_new = new SimpleDateFormat("EEE, d MMM y");
 //        SimpleDateFormat df_jam = new SimpleDateFormat("hh:mm");
 //        String date_Event = df_new.format(c.getTime());
 //        String hour_Event = df_jam.format(c.getTime());
 
-        holder.tv_tgl.setText(item.getTvTgl());
-        holder.tv_judul.setText(item.getTvJudul());
-        holder.tv_alamat.setText(item.getTvAlamat());
-        holder.tv_kategori.setText(" #" + item.getTvKategori());
+//        holder.tv_tgl.setText(date_Event);
+        holder.tv_tgl.setText(item.getDeadline());
+        holder.tv_judul.setText(item.getEventTitle());
+        holder.tv_alamat.setText(item.getEventLocation());
+        holder.tv_kategori.setText(" #" + item.getCategoriesName());
         holder.tv_joined.setText(item.getTotalJoin() + " Joined / Min. " + item.getEventMinjoin() + " People");
-        Glide.with(context).load(ParameterCollections.BASE_URL_IMG_THUMB +  item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
+        Glide.with(context).load(ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailEvent.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("url_photo_event",ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto());
-                intent.putExtra("judul_event", item.getTvJudul());
-                intent.putExtra("alamat_event", item.getTvAlamat());
-                intent.putExtra("tgl_event", item.getTvTgl());
+                intent.putExtra("url_photo_event", ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto());
+                intent.putExtra("judul_event", item.getEventTitle());
+                intent.putExtra("alamat_event", item.getEventLocation());
+                intent.putExtra("tgl_event", item.getDeadline());
                 intent.putExtra("lat_event", item.getEventLat());
                 intent.putExtra("lon_event", item.getEventLon());
                 intent.putExtra("desc_event", item.getEventDescription());
-                intent.putExtra("id_event", item.getIdEvent());
+                intent.putExtra("id_event", item.getId());
                 intent.putExtra("event_documentationid", item.getEventDocumentationid());
                 intent.putExtra("member_name", item.getMemberName());
                 intent.putExtra("member_phone", item.getMemberPhone());

@@ -183,7 +183,7 @@ public class Events_Calendar extends Fragment{
                 rv.setLayoutManager(layoutManager);
                 rv.setAdapter(adapter);
             }else{
-                Toast.makeText(getActivity(), "No Event on Calendar Yet", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "No Event on Calendar Yet", Toast.LENGTH_LONG).show();
                 rv.setVisibility(View.GONE);
                 btn_refresh.setVisibility(View.VISIBLE);
                 animation.cancel();

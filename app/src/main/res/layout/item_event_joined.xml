@@ -25,12 +25,14 @@
 
         <TextView
             android:id="@+id/tv_tgl"
+            android:textColor="@color/color_text_dark"
             android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_judul"
+            android:textColor="@color/color_text_dark"
             android:textSize="@dimen/medium"
             android:maxLines="2"
             android:layout_width="match_parent"
@@ -38,6 +40,7 @@
 
         <TextView
             android:id="@+id/tv_alamat"
+            android:textColor="@color/color_text_dark"
             android:maxLines="3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

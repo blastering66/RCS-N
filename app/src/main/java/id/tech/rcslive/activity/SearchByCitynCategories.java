@@ -31,10 +31,12 @@ import id.tech.rcslive.adapters.RV_Adapter_TypeEvent;
 import id.tech.rcslive.adapters.Rest_Adapter;
 import id.tech.rcslive.models.PojoCategories;
 import id.tech.rcslive.models.PojoCity;
+import id.tech.rcslive.models.PojoEventRegular;
 import id.tech.rcslive.models.Pojo_EventHighlight;
 import id.tech.rcslive.models.Rowdata_Categories;
 import id.tech.rcslive.models.Rowdata_City;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
+import id.tech.rcslive.models.Rowdata_EventRegular;
 import id.tech.rcslive.util.ParameterCollections;
 import id.tech.rcslive.util.PublicFunctions;
 import retrofit.Call;
@@ -59,18 +61,21 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
     @Override
     public void selectedRegion(String id) {
         selected_region = id;
-        new ASyncTask_GetTypeEvent().execute();
+//        new ASyncTask_GetTypeEvent().execute();
+        new ASyncTask_GetAllCategories().execute();
     }
 
     @Override
     public void selectedType(String id) {
         selected_type_event = id;
-        new ASyncTask_GetAllCategories().execute();
+//        new ASyncTask_GetAllCategories().execute();
     }
 
     @Override
     public void selectedCategories(String id) {
-        selected_categories = id;
+        selected_type_event = "Regular";
+//        selected_categories = id;
+        selected_categories = "1";
         new ASyncTask_GetEventResult().execute();
     }
 
@@ -82,7 +87,7 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
         activity = this;
         ActionBar ac = getSupportActionBar();
         ac.setDisplayHomeAsUpEnabled(true);
-        ac.setTitle("Search Event ");
+        ac.setTitle("Search Regular Event ");
 
 
         new ASyncTask_GetAllCity().execute();
@@ -259,7 +264,10 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
                                 Rowdata_Categories item = new Rowdata_Categories();
                                 item.setId(response_event.body().getData().get(i).getId());
                                 item.setCategoriesName(response_event.body().getData().get(i).getCategoriesName());
-                                data.add(item);
+
+                                if(item.getId().equals("1")){
+                                    data.add(item);
+                                }
 
                                 Log.e("id_event = ", response_event.body().getData().get(i).getId());
                             }
@@ -321,18 +329,18 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
         @Override
         protected Void doInBackground(Void... params) {
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
-            Call<Pojo_EventHighlight> call = adapter.get_result_events(selected_region, selected_categories);
+            Call<PojoEventRegular> call = adapter.get_result_events_regular(selected_region);
 
             try{
                 Thread.sleep(1000);
-                Response<Pojo_EventHighlight> response_event = call.execute();
+                Response<PojoEventRegular> response_event = call.execute();
                 if(response_event.isSuccess()){
                     if(response_event.body().getJsonCode().equals("1")){
                         if(response_event.body().getData() != null){
                             for(int i=0; i< response_event.body().getData().size(); i++){
                                 Rowdata_EventHighlight item = new Rowdata_EventHighlight();
                                 item.setIdEvent(response_event.body().getData().get(i).getId());
-                                item.setTvTgl(response_event.body().getData().get(i).getDeadline());
+                                item.setTvTgl(response_event.body().getData().get(i).getDaySchedule());
                                 item.setTvJudul(response_event.body().getData().get(i).getEventTitle());
                                 item.setTvAlamat(response_event.body().getData().get(i).getEventLocation());
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());

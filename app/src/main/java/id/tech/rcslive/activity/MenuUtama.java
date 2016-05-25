@@ -70,6 +70,10 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         if(requestCode == 2 && resultCode == RESULT_OK){
             finish();
         }
+
+//        if(requestCode == 3 && resultCode == RESULT_OK){
+//            tabHost.setSelectedNavigationItem(1);
+//        }
     }
 
     @Override
@@ -98,8 +102,8 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         });
 
         //Menambah jenis Tab
-        tabHost.addTab(tabHost.newTab().setText("Highlight").setTabListener(this));
-        tabHost.addTab(tabHost.newTab().setText("Calendar").setTabListener(this));
+        tabHost.addTab(tabHost.newTab().setText("Irregular").setTabListener(this));
+        tabHost.addTab(tabHost.newTab().setText("Regular").setTabListener(this));
         tabHost.addTab(tabHost.newTab().setText("Joined").setTabListener(this));
 
     }
@@ -153,9 +157,11 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         public Fragment getItem(int num) {
             switch (num){
                 case 0:
-                    return new Events_Highlight();
-                case 1:
-                    return new Events_Calendar();
+//                    return new Events_Highlight();
+                    return new Events_Irregular();
+                case 2:
+//                    return new Events_Calendar();
+                    return new Events_Joined();
 
                 default:
                     return new Events_Joined();
@@ -172,9 +178,9 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Highlight";
+                    return "Irregular";
                 case 1:
-                    return "Calendar";
+                    return "Regular";
                 case 2:
                     return "Joined";
                 default:
@@ -188,6 +194,10 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     @Override
     public void onTabSelected(MaterialTab tab) {
         viewPager.setCurrentItem(tab.getPosition());
+        if(tab.getPosition() == 1){
+            startActivity(new Intent(getApplicationContext(), SearchByCitynCategories.class));
+            viewPager.setCurrentItem(0);
+        }
 
     }
 

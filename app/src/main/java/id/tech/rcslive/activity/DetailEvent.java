@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
@@ -42,6 +43,7 @@ import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
 import id.tech.rcslive.models.Pojo_Dokumentasi;
 import id.tech.rcslive.models.Pojo_EventUserJoined;
+import id.tech.rcslive.util.GPSTracker;
 import id.tech.rcslive.util.ParameterCollections;
 import id.tech.rcslive.util.PublicFunctions;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -164,6 +166,26 @@ public class DetailEvent extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.img_map)
+    void onCLickGmaps() {
+        GPSTracker tracker = new GPSTracker(getApplicationContext());
+        double lat_now = tracker.getLatitude();
+        double long_now = tracker.getLongitude();
+
+        if(lat_now != 0 && long_now != 0){
+            Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("http://maps.google.com/maps?saddr=" + String.valueOf(lat_now) +
+                            "," + String.valueOf(lat_now) +" &daddr= " + lat_event
+                                    + "," + lon_event));
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(),
+                    "Can not get Your Location, Check your GPS", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,7 +253,7 @@ public class DetailEvent extends AppCompatActivity {
                 + lat_event
                 + ","
                 + lon_event
-                + "&zoom=10&size=600x400&markers=color:blue|size:mid|"
+                + "&zoom=15&size=600x400&markers=color:blue|size:mid|"
                 + lat_event
                 + ","
                 + lon_event
@@ -333,7 +355,7 @@ public class DetailEvent extends AppCompatActivity {
             try {
                 Rest_Adapter adapter = PublicFunctions.initRetrofit();
                 Call<PojoResponseInsert> call = adapter.insert_join_event(
-                        ParameterCollections.KIND_JOIN, id_event,id_user);
+                         id_event,id_user);
 //                Call<PojoResponseInsert> call = adapter.insert_join_event_get();
 
                 Response<PojoResponseInsert> response = call.execute();
@@ -397,13 +419,13 @@ public class DetailEvent extends AppCompatActivity {
                                 for (int i = 0; i < response.body().getData().size(); i++) {
                                     switch (i) {
                                         case 0:
-                                            url1 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url1 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                         case 1:
-                                            url2 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url2 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                         case 2:
-                                            url3 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url3 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                     }
                                 }
@@ -490,13 +512,13 @@ public class DetailEvent extends AppCompatActivity {
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 switch (i) {
                                     case 0:
-                                        url1 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url1 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                     case 1:
-                                        url2 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url2 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                     case 2:
-                                        url3 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url3 = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                 }
                             }
@@ -581,13 +603,13 @@ public class DetailEvent extends AppCompatActivity {
                                     if(i == 0){
                                         cCommentor00 = response.body().getData().get(0).getMemberName();
                                         cComment00 = response.body().getData().get(0).getCommentsText();
-                                        cPhotoCommentor00 = response.body().getData().get(0).getMemberPhoto();
+                                        cPhotoCommentor00 = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(0).getMemberPhoto();
                                     }
 
                                     if(i == 1){
                                         cCommentor01 = response.body().getData().get(1).getMemberName();
                                         cComment01 = response.body().getData().get(1).getCommentsText();
-                                        cPhotoCommentor01 = response.body().getData().get(1).getMemberPhoto();
+                                        cPhotoCommentor01 = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(1).getMemberPhoto();
                                     }
                                 }
                             }

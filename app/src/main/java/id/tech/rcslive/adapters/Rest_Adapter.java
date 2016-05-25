@@ -8,6 +8,8 @@ import com.squareup.okhttp.RequestBody;
 import id.tech.rcslive.models.PojoCategories;
 import id.tech.rcslive.models.PojoCity;
 import id.tech.rcslive.models.PojoCountry;
+import id.tech.rcslive.models.PojoEventIrregular;
+import id.tech.rcslive.models.PojoEventRegular;
 import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
@@ -82,10 +84,19 @@ public interface Rest_Adapter {
             @Query("limit") String limit
     );
 
+    @GET("getApi.php?kind=event&filter_mode=3&eventtype=Irregular")
+    Call<PojoEventIrregular> get_all_events_irregular(
+    );
+
     @GET("getApi.php?kind=event&filter_mode=1&eventtype=Irregular")
     Call<Pojo_EventHighlight> get_result_events(
             @Query("regionid") String regionid,
             @Query("categoryid") String categoryid
+    );
+
+    @GET("getApi.php?kind=event&filter_mode=4&eventtype=Regular")
+    Call<PojoEventRegular> get_result_events_regular(
+            @Query("idregion") String regionid
     );
 
     @GET("getApi.php?")
@@ -134,9 +145,8 @@ public interface Rest_Adapter {
     );
 
     @FormUrlEncoded
-    @POST("insert.php?")
+    @POST("insert.php?kind=join")
     Call<PojoResponseInsert> insert_join_event(
-            @Field("kind") String kind,
             @Field("eventid") String eventid,
             @Field("userid") String userid
     );

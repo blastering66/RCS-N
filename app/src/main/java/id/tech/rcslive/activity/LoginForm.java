@@ -241,13 +241,13 @@ public class LoginForm  extends AppCompatActivity {
                 }else{
 
                     //Sementara
-                    spf.edit().putString(ParameterCollections.SPF_USER_ID, "1").commit();
-                    spf.edit().putString(ParameterCollections.SPF_USER_NAME, "Ridho Maulana").commit();
-                    spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, "http://www.lcfc.com/images/common/bg_player_profile_default_big.png").commit();
-                    spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
-                    startActivity(new Intent(getApplicationContext(), MenuUtama.class));
-                    finish();
-//                    new ASyncTask_Login().execute();
+//                    spf.edit().putString(ParameterCollections.SPF_USER_ID, "1").commit();
+//                    spf.edit().putString(ParameterCollections.SPF_USER_NAME, "Ridho Maulana").commit();
+//                    spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, "http://www.lcfc.com/images/common/bg_player_profile_default_big.png").commit();
+//                    spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+//                    startActivity(new Intent(getApplicationContext(), MenuUtama.class));
+//                    finish();
+                    new ASyncTask_Login().execute();
                 }
 
                 break;
@@ -258,7 +258,7 @@ public class LoginForm  extends AppCompatActivity {
     private class ASyncTask_Login extends AsyncTask<Void,Void,Void>{
         DialogFragmentProgress pDialog;
         String cCode="0";
-        String cEmail, cPassword, cResponse;
+        String cEmail, cPassword, cResponse = "";
 
         @Override
         protected void onPreExecute() {
@@ -286,7 +286,7 @@ public class LoginForm  extends AppCompatActivity {
                         cResponse= response.body().getResponse().toString();
                         String id = response.body().getData().get(0).getId();
                         String name = response.body().getData().get(0).getMemberName();
-                        String url_photo = response.body().getData().get(0).getMemberPhoto();
+                        String url_photo = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(0).getMemberPhoto();
 
                         spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
                         spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();

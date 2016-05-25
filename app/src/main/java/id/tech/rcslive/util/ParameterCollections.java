@@ -10,11 +10,10 @@ import id.tech.rcslive.models.RowDataGallery;
 public class ParameterCollections {
 
 //    public static String BASE_URL=  "http://rcs-indonesia.com/nokia/api/";
-public static String BASE_URL=  "http://livelifeid.com/api/";
+    public static String BASE_URL=  "http://livelifeid.com/api/";
     public static String BASE_URL_IMG=  "http://livelifeid.com/uploads/source/";
     public static String BASE_URL_IMG_THUMB=  "http://livelifeid.com/uploads/thumbnail/";
     public static String BASE_URL_GMAP=  "http://maps.google.com/maps/api/directions/";
-
     public static String URL_SD_IMAGES =  "/LivelifeId/images/";
 
     public static List<RowDataGallery> data_selected;
@@ -34,7 +33,7 @@ public static String BASE_URL=  "http://livelifeid.com/api/";
     public static String KIND_COMMENTS_EVENT = "commentsbyid_event";
     public static String KIND_COMMENTS_INSERT = "comments";
     public static String KIND_DOCUMENTATION_INSERT = "documentation";
-    public static String KIND_JOIN = "join_post";
+    public static String KIND_JOIN = "join";
 
     public static String TAG_EMAIL = "email";
     public static String TAG_PASS = "password";

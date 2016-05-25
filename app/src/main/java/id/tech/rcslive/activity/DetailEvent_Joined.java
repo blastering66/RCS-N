@@ -330,7 +330,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
             try {
                 Rest_Adapter adapter = PublicFunctions.initRetrofit();
                 Call<PojoResponseInsert> call = adapter.insert_join_event(
-                        ParameterCollections.KIND_JOIN, id_event,id_user);
+                         id_event,id_user);
 //                Call<PojoResponseInsert> call = adapter.insert_join_event_get();
 
                 Response<PojoResponseInsert> response = call.execute();

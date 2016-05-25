@@ -40,6 +40,7 @@
             android:layout_height="75dp"/>
 
         <ImageView
+            android:visibility="gone"
             android:layout_alignParentRight="true"
             android:id="@+id/btn_region_filter"
             android:src="@drawable/img_search"

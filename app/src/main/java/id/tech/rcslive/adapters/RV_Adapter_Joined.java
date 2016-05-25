@@ -22,6 +22,7 @@ import id.tech.rcslive.activity.DetailEvent_Joined;
 import id.tech.rcslive.activity.R;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
 import id.tech.rcslive.models.Rowdata_EventJoined;
+import id.tech.rcslive.util.ParameterCollections;
 
 public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.ViewHolder>{
     private Context context;
@@ -53,13 +54,13 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
         holder.tv_tgl.setText(date_Event);
         holder.tv_judul.setText(item.getTvJudul());
         holder.tv_alamat.setText(item.getTvAlamat());
-        Glide.with(context).load(item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
+        Glide.with(context).load(ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DetailEvent_Joined.class);
                 intent.putExtra("id_event", item.getIdEvent());
-                intent.putExtra("url_photo_event", item.getEventPhoto());
+                intent.putExtra("url_photo_event", ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto());
                 intent.putExtra("judul_event", item.getTvJudul());
                 intent.putExtra("alamat_event", item.getTvAlamat());
                 intent.putExtra("tgl_event", item.getTvTgl());
