@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -100,7 +101,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
     String id_user;
     String now_latitude, now_longitude, lat_event, lon_event;
     ImageView img_00,img_01;
-
+    String id_Join;
     private Activity activity;
 
     @OnClick(R.id.btn_call_pic) void onClick_CallPIC(){
@@ -160,6 +161,11 @@ public class DetailEvent_Joined extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.btn_unjoin) void onClickUnjoined(){
+        new AsyncTask_CheckinEvent().execute();
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +174,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
         ButterKnife.bind(this);
         spf = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
         id_user = spf.getString(ParameterCollections.SPF_USER_ID, "");
+        id_Join = getIntent().getStringExtra("joinID");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -242,7 +249,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AsyncTask_JoinEvent().execute();
+                new AsyncTask_UnJoinEvent().execute();
             }
         });
 
@@ -312,7 +319,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
         }
     }
 
-    private class AsyncTask_JoinEvent extends AsyncTask<Void, Void, Void> {
+    private class AsyncTask_CheckinEvent extends AsyncTask<Void, Void, Void> {
         //        private CustomProgressDialog loader;
         private CustomProgressDialog loader;
         boolean isSuccess = false;
@@ -329,8 +336,8 @@ public class DetailEvent_Joined extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try {
                 Rest_Adapter adapter = PublicFunctions.initRetrofit();
-                Call<PojoResponseInsert> call = adapter.insert_join_event(
-                         id_event,id_user);
+                Call<PojoResponseInsert> call = adapter.checkin_event(
+                        id_user, id_event);
 //                Call<PojoResponseInsert> call = adapter.insert_join_event_get();
 
                 Response<PojoResponseInsert> response = call.execute();
@@ -346,10 +353,10 @@ public class DetailEvent_Joined extends AppCompatActivity {
                 }
 
             } catch (IOException e) {
-                Log.e("Error = " ,e.getMessage().toString());
+                Log.e("Error = " ,"");
 
             }catch (Exception e) {
-                Log.e("Error = " , e.getMessage().toString());
+                Log.e("Error = " , "");
             }
 
             return null;
@@ -362,7 +369,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
 
             if(isSuccess){
                 View view = findViewById(R.id.fab);
-                Snackbar.make(view, "Event Joined", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Event Checkin", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }else{
                 View view = findViewById(R.id.fab);
@@ -370,6 +377,68 @@ public class DetailEvent_Joined extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
 
+        }
+    }
+
+    private class AsyncTask_UnJoinEvent extends AsyncTask<Void, Void, Void> {
+        //        private CustomProgressDialog loader;
+        private CustomProgressDialog loader;
+        boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            loader = new CustomProgressDialog(activity, R.style.SpotsDialogDefault);
+            loader.setLoaderType(CustomProgressDialog.SPINNING_SQUARE);
+            loader.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Rest_Adapter adapter = PublicFunctions.initRetrofit();
+                Call<PojoResponseInsert> call = adapter.delete_unjoin_event(
+                        id_Join);
+//                Call<PojoResponseInsert> call = adapter.insert_join_event_get();
+
+                Response<PojoResponseInsert> response = call.execute();
+
+                if(response.isSuccess()){
+                    if(response.body() != null){
+                        if(response.body().getJsonCode().equals("1")){
+                            if(response.body().getData().equals("1")){
+                                isSuccess = true;
+                            }
+                        }
+                    }
+                }
+
+            } catch (IOException e) {
+                Log.e("Error = " ,"");
+
+            }catch (Exception e) {
+                Log.e("Error = " , "");
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            loader.dismiss();
+
+            if(isSuccess){
+                View view = findViewById(R.id.fab);
+//                Snackbar.make(view, "Event Unjoined", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Toast.makeText(getApplicationContext(), "Event Unjoined", Toast.LENGTH_LONG).show();
+                finish();
+            }else{
+                View view = findViewById(R.id.fab);
+                Snackbar.make(view, "Fail to Join", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
 
         }
     }

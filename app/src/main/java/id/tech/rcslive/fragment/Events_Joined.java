@@ -101,6 +101,8 @@ public class Events_Joined extends Fragment{
                                 item.setMemberName(response_event.body().getData().get(i).getMemberName());
                                 item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
                                 item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
+
+                                item.setJoinId(response_event.body().getData().get(i).getJoinID());
                                 data.add(item);
                             }
                         }

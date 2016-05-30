@@ -503,6 +503,19 @@ public class PojoEventIrregular {
             this.dateConverted = dateConverted;
         }
 
+
+        @SerializedName("cek_exists")
+        @Expose
+        private String cek_exists;
+
+        public String getCek_exists() {
+            return cek_exists;
+        }
+
+        public void setCek_exists(String cek_exists) {
+            this.cek_exists = cek_exists;
+        }
+
     }
 
 }

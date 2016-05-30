@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import id.tech.rcslive.activity.DetailEvent;
+import id.tech.rcslive.activity.DetailEvent_Joined;
 import id.tech.rcslive.activity.R;
 
 import java.text.ParseException;
@@ -58,6 +59,7 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
         holder.wrapper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(context, DetailEvent.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("url_photo_event",ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto());
@@ -73,6 +75,7 @@ public class RV_Adapter_Highlight extends RecyclerView.Adapter<RV_Adapter_Highli
                 intent.putExtra("member_phone", item.getMemberPhone());
                 intent.putExtra("member_photo", item.getMemberPhoto());
                 context.startActivity(intent);
+
             }
         });
 //        if(position == 0){

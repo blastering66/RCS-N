@@ -262,4 +262,16 @@ public class Rowdata_EventHighlight {
     public void setEventPhoto(String eventPhoto) {
         this.eventPhoto = eventPhoto;
     }
+
+    @SerializedName("cek_exists")
+    @Expose
+    private String cek_exists;
+
+    public String getCek_exists() {
+        return cek_exists;
+    }
+
+    public void setCek_exists(String cek_exists) {
+        this.cek_exists = cek_exists;
+    }
 }

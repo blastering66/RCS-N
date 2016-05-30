@@ -4,6 +4,8 @@ package id.tech.rcslive.fragment;
  * Created by RebelCreative-A1 on 21/03/2016.
  */
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,7 +42,7 @@ public class Events_Irregular extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     RecyclerView.Adapter adapter;
     ImageView btn_refresh;
-
+    String id_user;
 
 
     @Nullable
@@ -48,6 +50,9 @@ public class Events_Irregular extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_rv, null);
         rv = (RecyclerView)view.findViewById(R.id.rv);
+
+        SharedPreferences spf = getActivity().getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
+        id_user = spf.getString(ParameterCollections.SPF_USER_ID, "");
 
         layoutManager = new GridLayoutManager(getContext(),1);
 
@@ -104,7 +109,7 @@ public class Events_Irregular extends Fragment {
         protected Void doInBackground(Void... params) {
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
 
-            Call<PojoEventIrregular> call = adapter.get_all_events_irregular();
+            Call<PojoEventIrregular> call = adapter.get_all_events_irregular(id_user);
 
             try{
 //                Thread.sleep(1000);
@@ -129,6 +134,8 @@ public class Events_Irregular extends Fragment {
                                 item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
                                 item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
                                 item.setTotalJoin(response_event.body().getData().get(i).getTotalJoin());
+
+                                item.setCek_exists(response_event.body().getData().get(i).getCek_exists());
                                 data.add(item);
 
                                 Log.e("id_event = ", response_event.body().getData().get(i).getId());

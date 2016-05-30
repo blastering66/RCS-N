@@ -527,6 +527,18 @@ public class Pojo_EventJoined {
             this.eventStatusactive = eventStatusactive;
         }
 
+        @SerializedName("joinID")
+        @Expose
+        private String joinID;
+
+        public String getJoinID() {
+            return joinID;
+        }
+
+        public void setJoinId(String cek_exists) {
+            this.joinID = cek_exists;
+        }
+
     }
 
 }

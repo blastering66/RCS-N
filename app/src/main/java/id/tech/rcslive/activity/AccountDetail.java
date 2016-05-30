@@ -97,6 +97,7 @@ public class AccountDetail extends AppCompatActivity {
         String message = "";
         private CustomProgressDialog pDialog;
         private String idUser, nameUser, urlPhotoUsr= "";
+        String name, email, phone, idCity, idCountry= "";
 
         @Override
         protected void onPreExecute() {
@@ -118,7 +119,11 @@ public class AccountDetail extends AppCompatActivity {
                 if(response.isSuccess()){
                     if(response.body() != null){
                        if(response.body().getJsonCode().equals("1")){
-                           String name = response.body().getData().get(0).getMemberName();
+                           name = response.body().getData().get(0).getMemberName();
+                           email = response.body().getData().get(0).getMemberEmail();
+                           phone = response.body().getData().get(0).getMemberPhone();
+                           idCity = response.body().getData().get(0).getMemberCity();
+                           idCountry = response.body().getData().get(0).getMemberCountry();
 
                        }else{
                            message = response.body().getResponse();

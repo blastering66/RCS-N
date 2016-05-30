@@ -265,5 +265,18 @@ public class Rowdata_EventJoined {
         this.eventPhoto = eventPhoto;
     }
 
+
+
+    @SerializedName("joinID")
+    @Expose
+    private String joinID;
+
+    public String getJoinID() {
+        return joinID;
+    }
+
+    public void setJoinId(String cek_exists) {
+        this.joinID = cek_exists;
+    }
 }
 

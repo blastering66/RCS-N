@@ -86,6 +86,7 @@ public interface Rest_Adapter {
 
     @GET("getApi.php?kind=event&filter_mode=3&eventtype=Irregular")
     Call<PojoEventIrregular> get_all_events_irregular(
+            @Query("userlog_id") String userlog_id
     );
 
     @GET("getApi.php?kind=event&filter_mode=1&eventtype=Irregular")
@@ -96,7 +97,8 @@ public interface Rest_Adapter {
 
     @GET("getApi.php?kind=event&filter_mode=4&eventtype=Regular")
     Call<PojoEventRegular> get_result_events_regular(
-            @Query("idregion") String regionid
+            @Query("idregion") String regionid,
+            @Query("userlog_id") String userlog_id
     );
 
     @GET("getApi.php?")
@@ -151,6 +153,12 @@ public interface Rest_Adapter {
             @Field("userid") String userid
     );
 
+    @FormUrlEncoded
+    @POST("delete.php?kind=unjoin")
+    Call<PojoResponseInsert> delete_unjoin_event(
+            @Field("id") String eventid
+    );
+
     @GET("insert.php?")
     Call<PojoResponseInsert> insert_join_event_get(
             @Query("kind") String kind,
@@ -198,5 +206,12 @@ public interface Rest_Adapter {
     @GET("getApi.php?kind=profile")
     Call<Pojo_ResponseAccountUser> get_profile_user(
             @Query("id") String id
+    );
+
+    @FormUrlEncoded
+    @POST("insert.php?kind=checkin")
+    Call<PojoResponseInsert> checkin_event(
+            @Field("userid") String id,
+            @Field("eventid") String limit
     );
 }

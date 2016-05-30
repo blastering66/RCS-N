@@ -77,8 +77,21 @@ public class PojoEventRegular {
 
     public class Datum {
 
+        @SerializedName("cek_exists")
+        @Expose
+        private String cek_exists;
+
+        public String getCek_exists() {
+            return cek_exists;
+        }
+
+        public void setCek_exists(String cek_exists) {
+            this.cek_exists = cek_exists;
+        }
+
         @SerializedName("total_join")
         @Expose
+
         private String totalJoin;
         @SerializedName("id")
         @Expose

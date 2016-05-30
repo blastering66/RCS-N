@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import id.tech.rcslive.activity.DetailEvent;
+import id.tech.rcslive.activity.DetailEvent_Joined;
 import id.tech.rcslive.activity.R;
 import id.tech.rcslive.models.Rowdata_EventHighlight;
 import id.tech.rcslive.models.Rowdata_EventIrregular;
@@ -75,6 +76,7 @@ public class RV_Adapter_Irregular extends RecyclerView.Adapter<RV_Adapter_Irregu
                 intent.putExtra("member_phone", item.getMemberPhone());
                 intent.putExtra("member_photo", item.getMemberPhoto());
                 context.startActivity(intent);
+
             }
         });
 //        if(position == 0){

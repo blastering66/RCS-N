@@ -1,6 +1,8 @@
 package id.tech.rcslive.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -53,6 +55,7 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
     RecyclerView.Adapter adapter, adapter_result;
     Activity activity;
     String selected_region, selected_categories, selected_type_event;
+    String id_user;
 
     @OnClick(R.id.btn_refresh) void onRefresh(){
         new ASyncTask_GetAllCity().execute();
@@ -89,6 +92,8 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
         ac.setDisplayHomeAsUpEnabled(true);
         ac.setTitle("Search Regular Event ");
 
+        SharedPreferences spf = getSharedPreferences(ParameterCollections.SPF_NAME, Context.MODE_PRIVATE);
+        id_user = spf.getString(ParameterCollections.SPF_USER_ID, "");
 
         new ASyncTask_GetAllCity().execute();
     }
@@ -329,7 +334,7 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
         @Override
         protected Void doInBackground(Void... params) {
             Rest_Adapter adapter = PublicFunctions.initRetrofit();
-            Call<PojoEventRegular> call = adapter.get_result_events_regular(selected_region);
+            Call<PojoEventRegular> call = adapter.get_result_events_regular(selected_region, id_user);
 
             try{
                 Thread.sleep(1000);
@@ -354,6 +359,8 @@ RV_Adapter_SearchCategories.OnSelectedCategoriesListener, RV_Adapter_TypeEvent.o
                                 item.setMemberPhone(response_event.body().getData().get(i).getMemberPhone());
                                 item.setMemberPhoto(response_event.body().getData().get(i).getMemberPhoto());
                                 item.setTotalJoin(response_event.body().getData().get(i).getTotalJoin());
+
+                                item.setCek_exists(response_event.body().getData().get(i).getCek_exists());
                                 data.add(item);
 
                                 cCode = "1";

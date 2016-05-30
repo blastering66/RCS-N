@@ -35,8 +35,6 @@
                     android:background="@drawable/bg_gradient"/>
             </RelativeLayout>
 
-
-
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -47,7 +45,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/layout_content_detail" />
+    <include layout="@layout/layout_content_detail_joined" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -57,5 +55,7 @@
         android:src="@drawable/img_unjoin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>
