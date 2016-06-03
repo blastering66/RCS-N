@@ -87,7 +87,7 @@ public class Pojo_EventJoined {
         @SerializedName("member_userid")
         @Expose
         private String memberUserid;
-        @SerializedName("member_name")
+        @SerializedName("creator_name")
         @Expose
         private String memberName;
         @SerializedName("member_facebooklink")
@@ -138,10 +138,10 @@ public class Pojo_EventJoined {
         @SerializedName("event_statusactive")
         @Expose
         private String eventStatusactive;
-        @SerializedName("member_phone")
+        @SerializedName("creator_phone")
         @Expose
         private String memberPhone;
-        @SerializedName("member_photo")
+        @SerializedName("creator_photo")
         @Expose
         private String memberPhoto;
 
