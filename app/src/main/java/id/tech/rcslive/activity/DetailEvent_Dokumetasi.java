@@ -181,7 +181,7 @@ public class DetailEvent_Dokumetasi extends AppCompatActivity{
                                 for(int i=0; i< response.body().getData().size(); i++){
                                     RowData_Dokumentasi item= new RowData_Dokumentasi();
                                     item.setId(response.body().getData().get(i).getId());
-                                    item.setDocumentationPhoto(response.body().getData().get(i).getDocumentationPhoto());
+                                    item.setDocumentationPhoto(ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto());
                                     data.add(item);
 
                                 }

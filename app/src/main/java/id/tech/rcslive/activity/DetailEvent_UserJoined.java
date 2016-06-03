@@ -102,7 +102,7 @@ public class DetailEvent_UserJoined extends AppCompatActivity{
                                 item.setUserjoinedId("");
                                 item.setUserjoinedUniqueid("");
                                 item.setUserjoinedName(response.body().getData().get(i).getUserjoinedName());
-                                item.setUserjoinedPhoto(response.body().getData().get(i).getUserjoinedPhoto());
+                                item.setUserjoinedPhoto(ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto());
                                 data.add(item);
 
                             }

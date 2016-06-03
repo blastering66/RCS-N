@@ -10,6 +10,7 @@ import id.tech.rcslive.models.PojoCity;
 import id.tech.rcslive.models.PojoCountry;
 import id.tech.rcslive.models.PojoEventIrregular;
 import id.tech.rcslive.models.PojoEventRegular;
+import id.tech.rcslive.models.PojoGroup;
 import id.tech.rcslive.models.PojoResponseGmap;
 import id.tech.rcslive.models.PojoResponseInsert;
 import id.tech.rcslive.models.Pojo_Comment;
@@ -56,6 +57,10 @@ public interface Rest_Adapter {
 
     @GET("getApi.php?kind=city")
     Call<PojoCity> get_all_city(
+    );
+
+    @GET("getApi.php?kind=group")
+    Call<PojoGroup> get_all_group(
     );
 
     @GET("getApi.php?kind=categories")
@@ -200,6 +205,32 @@ public interface Rest_Adapter {
             @Part("password") RequestBody password,
             @Part("country") RequestBody country,
             @Part("city") RequestBody city,
+            @Part("avatar\"; filename=\"img0.png\" ") RequestBody docphoto
+    );
+
+    @FormUrlEncoded
+    @POST("update.php?kind=update_person")
+    Call<PojoResponseInsert> update_person(
+            @Query("id") String id,
+            @Field("name") String name,
+            @Field("email") String email,
+            @Field("phone") String phone,
+            @Field("password") String password,
+            @Field("country") String country,
+            @Field("city") String city,
+            @Field("hometown") String hometown,
+            @Field("group") String group,
+            @Field("gender") String gender,
+            @Field("birth") String  birth,
+            @Field("bio") String bio
+
+//            @Part("avatar\"; filename=\"img0.png\" ") RequestBody docphoto
+    );
+
+    @Multipart
+    @POST("update.php?kind=update_person_photo")
+    Call<PojoResponseInsert> update_avatar(
+            @Part("id") RequestBody id,
             @Part("avatar\"; filename=\"img0.png\" ") RequestBody docphoto
     );
 

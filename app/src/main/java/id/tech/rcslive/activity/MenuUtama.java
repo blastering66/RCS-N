@@ -68,8 +68,9 @@ public class MenuUtama extends AppCompatActivity implements MaterialTabListener 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 2 && resultCode == RESULT_OK){
-            finish();
+//            finish();
         }
+        new AsyncTask_LoadProfile().execute();
 
 //        if(requestCode == 3 && resultCode == RESULT_OK){
 //            tabHost.setSelectedNavigationItem(1);

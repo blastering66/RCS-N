@@ -14,7 +14,7 @@
 
         <com.pkmmte.view.CircularImageView
             android:id="@+id/img"
-            android:src="@drawable/img_profile_test"
+            android:src="@drawable/img_user_empty"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp" />

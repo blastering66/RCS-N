@@ -105,7 +105,7 @@ public class DetailEvent extends AppCompatActivity {
     String member_phone;
     String id_user;
     String now_latitude, now_longitude, lat_event, lon_event;
-    ImageView img_00,img_01;
+    CircularImageView img_00,img_01;
 
     private Activity activity;
 
@@ -222,7 +222,7 @@ public class DetailEvent extends AppCompatActivity {
         String desc_event = getIntent().getStringExtra("desc_event");
         String member_name = getIntent().getStringExtra("member_name");
         member_phone = getIntent().getStringExtra("member_phone");
-        String member_photo = getIntent().getStringExtra("member_photo");
+        String member_photo = ParameterCollections.BASE_URL_IMG_THUMB + getIntent().getStringExtra("member_photo");
         id_event = getIntent().getStringExtra("id_event");
         event_documentationid = getIntent().getStringExtra("event_documentationid");
 
@@ -236,8 +236,6 @@ public class DetailEvent extends AppCompatActivity {
 
         Glide.with(this).load(member_photo).asBitmap().into(target);
         tv_pic.setText(member_name);
-
-
 
         mCollapsingToolbarLayout.setTitle(judul_event);
         tv_alamat.setText(alamat_event);
@@ -453,7 +451,7 @@ public class DetailEvent extends AppCompatActivity {
                             img_joined_1.setImageBitmap(resource);
                         }
                     };
-                    Glide.with(activity).load(url2).asBitmap().into(target);
+                    Glide.with(activity).load(url1).asBitmap().into(target);
                 }
 
                 if(url2 != null){
@@ -636,10 +634,18 @@ public class DetailEvent extends AppCompatActivity {
                 if(cPhotoCommentor00 != null){
                     LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
                     View view_Comment_00 = mInflater.inflate(R.layout.item_comment, null);
-                    img_00 = (ImageView) view_Comment_00.findViewById(R.id.img_commentor);
+                    img_00 = (CircularImageView) view_Comment_00.findViewById(R.id.img_commentor);
                     TextView tv_commentor_00 = (TextView) view_Comment_00.findViewById(R.id.tv_commentor);
                     TextView tv_comment_00 = (TextView) view_Comment_00.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent.this).load(cPhotoCommentor00).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_00);
+
+                    SimpleTarget target  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_00.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(cPhotoCommentor00).asBitmap().into(target);
+
                     tv_commentor_00.setText(cCommentor00);
                     tv_comment_00.setText(cComment00);
                     frame_comment_top.addView(view_Comment_00);
@@ -648,10 +654,16 @@ public class DetailEvent extends AppCompatActivity {
                 if(cPhotoCommentor01 != null){
                     LayoutInflater mInflater1 = LayoutInflater.from(getApplicationContext());
                     View view_Comment_01 = mInflater1.inflate(R.layout.item_comment, null);
-                    img_01 = (ImageView) view_Comment_01.findViewById(R.id.img_commentor);
+                    img_01 = (CircularImageView) view_Comment_01.findViewById(R.id.img_commentor);
                     TextView tv_commentor_01 = (TextView) view_Comment_01.findViewById(R.id.tv_commentor);
                     TextView tv_comment_01 = (TextView) view_Comment_01.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent.this).load(cPhotoCommentor01).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_01);
+                    SimpleTarget target  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_01.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(cPhotoCommentor01).asBitmap().into(target);
                     tv_commentor_01.setText(cCommentor01);
                     tv_comment_01.setText(cComment01);
                     frame_comment_top_2.addView(view_Comment_01);

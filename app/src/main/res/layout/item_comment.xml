@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="5dp">
 
-        <ImageView
+        <com.pkmmte.view.CircularImageView
             android:id="@+id/img_commentor"
             android:layout_gravity="center"
             android:src="@drawable/img_user_empty"

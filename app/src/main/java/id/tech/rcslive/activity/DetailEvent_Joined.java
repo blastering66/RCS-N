@@ -100,7 +100,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
     String member_phone;
     String id_user;
     String now_latitude, now_longitude, lat_event, lon_event;
-    ImageView img_00,img_01;
+    CircularImageView img_00,img_01;
     String id_Join;
     private Activity activity;
 
@@ -203,7 +203,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
         String desc_event = getIntent().getStringExtra("desc_event");
         String member_name = getIntent().getStringExtra("member_name");
         member_phone = getIntent().getStringExtra("member_phone");
-        String member_photo = getIntent().getStringExtra("member_photo");
+        String member_photo = ParameterCollections.BASE_URL_IMG_THUMB + getIntent().getStringExtra("member_photo");
         id_event = getIntent().getStringExtra("id_event");
         event_documentationid = getIntent().getStringExtra("event_documentationid");
 
@@ -463,13 +463,13 @@ public class DetailEvent_Joined extends AppCompatActivity {
                                 for (int i = 0; i < response.body().getData().size(); i++) {
                                     switch (i) {
                                         case 0:
-                                            url1 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url1 = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                         case 1:
-                                            url2 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url2 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                         case 2:
-                                            url3 = response.body().getData().get(i).getUserjoinedPhoto();
+                                            url3 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getUserjoinedPhoto();
                                             break;
                                     }
                                 }
@@ -497,7 +497,7 @@ public class DetailEvent_Joined extends AppCompatActivity {
                             img_joined_1.setImageBitmap(resource);
                         }
                     };
-                    Glide.with(activity).load(url2).asBitmap().into(target);
+                    Glide.with(activity).load(url1).asBitmap().into(target);
                 }
 
                 if(url2 != null){
@@ -556,13 +556,13 @@ public class DetailEvent_Joined extends AppCompatActivity {
                             for (int i = 0; i < response.body().getData().size(); i++) {
                                 switch (i) {
                                     case 0:
-                                        url1 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url1 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                     case 1:
-                                        url2 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url2 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                     case 2:
-                                        url3 = response.body().getData().get(i).getDocumentationPhoto();
+                                        url3 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(i).getDocumentationPhoto();
                                         break;
                                 }
                             }
@@ -647,13 +647,13 @@ public class DetailEvent_Joined extends AppCompatActivity {
                                     if(i == 0){
                                         cCommentor00 = response.body().getData().get(0).getMemberName();
                                         cComment00 = response.body().getData().get(0).getCommentsText();
-                                        cPhotoCommentor00 = response.body().getData().get(0).getMemberPhoto();
+                                        cPhotoCommentor00 = ParameterCollections.BASE_URL_IMG_THUMB + response.body().getData().get(0).getMemberPhoto();
                                     }
 
                                     if(i == 1){
                                         cCommentor01 = response.body().getData().get(1).getMemberName();
                                         cComment01 = response.body().getData().get(1).getCommentsText();
-                                        cPhotoCommentor01 = response.body().getData().get(1).getMemberPhoto();
+                                        cPhotoCommentor01 = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(1).getMemberPhoto();
                                     }
                                 }
                             }
@@ -680,10 +680,17 @@ public class DetailEvent_Joined extends AppCompatActivity {
                 if(cPhotoCommentor00 != null){
                     LayoutInflater mInflater = LayoutInflater.from(getApplicationContext());
                     View view_Comment_00 = mInflater.inflate(R.layout.item_comment, null);
-                    img_00 = (ImageView) view_Comment_00.findViewById(R.id.img_commentor);
+                    img_00 = (CircularImageView) view_Comment_00.findViewById(R.id.img_commentor);
                     TextView tv_commentor_00 = (TextView) view_Comment_00.findViewById(R.id.tv_commentor);
                     TextView tv_comment_00 = (TextView) view_Comment_00.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent_Joined.this).load(cPhotoCommentor00).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_00);
+
+                    SimpleTarget target  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_00.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(cPhotoCommentor00).asBitmap().into(target);
                     tv_commentor_00.setText(cCommentor00);
                     tv_comment_00.setText(cComment00);
                     frame_comment_top.addView(view_Comment_00);
@@ -692,10 +699,18 @@ public class DetailEvent_Joined extends AppCompatActivity {
                 if(cPhotoCommentor01 != null){
                     LayoutInflater mInflater1 = LayoutInflater.from(getApplicationContext());
                     View view_Comment_01 = mInflater1.inflate(R.layout.item_comment, null);
-                    img_01 = (ImageView) view_Comment_01.findViewById(R.id.img_commentor);
+                    img_01 = (CircularImageView) view_Comment_01.findViewById(R.id.img_commentor);
                     TextView tv_commentor_01 = (TextView) view_Comment_01.findViewById(R.id.tv_commentor);
                     TextView tv_comment_01 = (TextView) view_Comment_01.findViewById(R.id.tv_comment);
-                    Glide.with(DetailEvent_Joined.this).load(cPhotoCommentor01).bitmapTransform(new CropCircleTransformation(getApplicationContext())).into(img_01);
+
+                    SimpleTarget target  = new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                            img_01.setImageBitmap(resource);
+                        }
+                    };
+                    Glide.with(activity).load(cPhotoCommentor01).asBitmap().into(target);
+
                     tv_commentor_01.setText(cCommentor01);
                     tv_comment_01.setText(cComment01);
                     frame_comment_top_2.addView(view_Comment_01);
