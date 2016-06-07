@@ -144,6 +144,41 @@ public class Pojo_EventJoined {
         @SerializedName("creator_photo")
         @Expose
         private String memberPhoto;
+        @SerializedName("event_type")
+        @Expose
+        private String eventType;
+
+        public String getEventType() {
+            return eventType;
+        }
+
+        public void setEventType(String eventType) {
+            this.eventType = eventType;
+        }
+
+
+        @SerializedName("ConvertDate")
+        @Expose
+        private String convertDate;
+
+        public String getConvertDate() {
+            return convertDate;
+        }
+
+        public void setConvertDate(String convertDate) {
+            this.convertDate = convertDate;
+        }
+
+        @SerializedName("day_schedule")
+        @Expose
+        private String daySchedule;
+        public String getDaySchedule() {
+            return daySchedule;
+        }
+
+        public void setDaySchedule(String daySchedule) {
+            this.daySchedule = daySchedule;
+        }
 
         @SerializedName("total_join")
         @Expose

@@ -90,7 +90,13 @@ public class Events_Joined extends Fragment{
                             for(int i=0; i< response_event.body().getData().size(); i++){
                                 Rowdata_EventJoined item = new Rowdata_EventJoined();
                                 item.setIdEvent(response_event.body().getData().get(i).getId());
-                                item.setTvTgl(response_event.body().getData().get(i).getDeadline());
+                                if(response_event.body().getData().get(i).getEventType().equals("Irregular")){
+                                    item.setTvTgl(response_event.body().getData().get(i).getConvertDate());
+                                }else{
+                                    item.setTvTgl(response_event.body().getData().get(i).getDaySchedule());
+
+                                }
+
                                 item.setTvJudul(response_event.body().getData().get(i).getEventTitle());
                                 item.setTvAlamat(response_event.body().getData().get(i).getEventLocation());
                                 item.setTvKategori(response_event.body().getData().get(i).getCategoriesName());

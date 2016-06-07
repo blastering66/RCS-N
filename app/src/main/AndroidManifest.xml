@@ -65,6 +65,20 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver android:name="id.tech.rcslive.services.BootCompletedReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="id.tech.rcslive.services.StartEventService"/>
+        <receiver android:name="id.tech.rcslive.services.CheckTomrrowEventService"/>
+
     </application>
 
 

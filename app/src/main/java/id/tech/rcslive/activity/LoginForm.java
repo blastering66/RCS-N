@@ -284,14 +284,17 @@ public class LoginForm  extends AppCompatActivity {
 
                         cCode= response.body().getJsonCode().toString();
                         cResponse= response.body().getResponse().toString();
-                        String id = response.body().getData().get(0).getId();
-                        String name = response.body().getData().get(0).getMemberName();
-                        String url_photo = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(0).getMemberPhoto();
 
-                        spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
-                        spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();
-                        spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_photo).commit();
-                        spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+                        if(cCode.equals("1")){
+                            String id = response.body().getData().get(0).getId();
+                            String name = response.body().getData().get(0).getMemberName();
+                            String url_photo = ParameterCollections.BASE_URL_IMG_THUMB +  response.body().getData().get(0).getMemberPhoto();
+
+                            spf.edit().putString(ParameterCollections.SPF_USER_ID, id).commit();
+                            spf.edit().putString(ParameterCollections.SPF_USER_NAME, name).commit();
+                            spf.edit().putString(ParameterCollections.SPF_USER_PHOTO_URL, url_photo).commit();
+                            spf.edit().putBoolean(ParameterCollections.SPF_LOGGED, true).commit();
+                        }
                     }
 
                 }else{

@@ -51,7 +51,9 @@ public class RV_Adapter_Joined extends RecyclerView.Adapter<RV_Adapter_Joined.Vi
         String date_Event = df_new.format(c.getTime());
         String hour_Event = df_jam.format(c.getTime());
 
-        holder.tv_tgl.setText(date_Event);
+//        holder.tv_tgl.setText(date_Event);
+        holder.tv_tgl.setText(item.getTvTgl());
+
         holder.tv_judul.setText(item.getTvJudul());
         holder.tv_alamat.setText(item.getTvAlamat());
         Glide.with(context).load(ParameterCollections.BASE_URL_IMG_THUMB + item.getEventPhoto()).placeholder(R.drawable.img_empty).into(holder.img);

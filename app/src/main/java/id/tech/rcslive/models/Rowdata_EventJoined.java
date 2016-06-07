@@ -278,5 +278,41 @@ public class Rowdata_EventJoined {
     public void setJoinId(String cek_exists) {
         this.joinID = cek_exists;
     }
+
+    @SerializedName("event_type")
+    @Expose
+    private String eventType;
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+
+    @SerializedName("day_schedule")
+    @Expose
+    private String daySchedule;
+    public String getDaySchedule() {
+        return daySchedule;
+    }
+
+    public void setDaySchedule(String daySchedule) {
+        this.daySchedule = daySchedule;
+    }
+
+    @SerializedName("ConvertDate")
+    @Expose
+    private String convertDate;
+
+    public String getConvertDate() {
+        return convertDate;
+    }
+
+    public void setConvertDate(String convertDate) {
+        this.convertDate = convertDate;
+    }
 }
 

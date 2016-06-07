@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.security.auth.login.LoginException;
 
+import id.tech.rcslive.services.StartEventService;
 import id.tech.rcslive.util.*;
 
 public class Splashscreen extends AppCompatActivity {
@@ -38,7 +39,15 @@ public class Splashscreen extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
             try{
                 Thread.sleep(1500);
+
                 sp = getSharedPreferences(ParameterCollections.SPF_NAME, MODE_PRIVATE);
+                Intent notif_service = new Intent(Splashscreen.this, StartEventService.class);
+                notif_service.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                notif_service.addFlags(Intent.FLAG_RECEIVER_NO_ABORT);
+                //add FLAG_RECEIVER_FOREGROUND to force the intent in foreground
+                notif_service.addFlags(Intent.FLAG_RECEIVER_FOREGROUND);
+                startService(notif_service);
+                Log.e("Service Started", "");
 //                showHashKey();
             }catch (Exception e){
 
